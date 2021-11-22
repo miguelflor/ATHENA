@@ -1,0 +1,137 @@
+{
+    "intents": [
+        {
+            "tag": "goodbyes",
+            "patterns": [
+                "goodbye",
+                "bye",
+                "farewell",
+                "bye bye",
+                "see you",
+                "see you later",
+                "go away"
+            ],
+            "resp": [
+                "I will go back to Olympus",
+                "bye",
+                "goodbye",
+                "see you later"
+            ]
+        },
+        {
+            "tag": "greet",
+            "patterns": [
+                "hello",
+                "hi",
+                "good morning",
+                "good evening",
+                "good afternoon"
+            ],
+            "resp": [
+                ""
+            ]
+        },
+        {
+            "tag": "new_note",
+            "patterns": [
+                "new note",
+                "write a note",
+                "add a note"
+            ],
+            "resp": [
+                "What's your note?"
+            ]
+        },
+        {
+            "tag": "new_cont",
+            "patterns": [
+                "add a contact",
+                "new contact",
+                "add a new contact"
+            ],
+            "resp": [
+                ""
+            ]
+        },
+        {
+            "tag": "read_note",
+            "patterns": [
+                "read note",
+                "read a note"
+            ],
+            "resp": [
+                ""
+            ]
+        },
+        {
+            "tag": "questions",
+            "patterns": [
+                "what is",
+                "what's",
+                "who is",
+                "who are",
+                "what are"
+            ],
+            "resp": [
+                ""
+            ]
+        },
+        {
+            "tag": "call_me",
+            "patterns": [
+                "call me",
+                "my name is",
+                "name me"
+            ],
+            "resp": [
+                ""
+            ]
+        },
+        {
+            "tag": "set_alarm",
+            "patterns": [
+                "set a alarm",
+                "create a alarm",
+                "alarm"
+            ],
+            "resp": [
+                ""
+            ]
+        },
+        {
+            "tag": "tell_time",
+            "patterns" : [
+                "tell time",
+                "what is the time",
+                "what time is it",
+                "whats the time",
+                "what time"
+            ],
+            "resp": [
+                ""
+            ]
+        }
+    ],
+    "notes": [
+        "lunch",
+        "read a note a note , yyeeee",
+        "hi how are u",
+        "i love cookies"
+    ],
+    "contacts": [
+        {
+            "name": "miguel",
+            "number": "960462802"
+        },
+        {
+            "name": "mom",
+            "num": "912482741"
+        }
+    ],
+    "alarms": [
+        {
+            "h": 9,
+            "m": 13
+        }
+    ]
+}
