@@ -3,9 +3,9 @@ import subprocess
 import pyttsx3
 import json
 import speech_recognition as sr
-import datetime
+
 import wikipedia
-import clock
+
 import os
 import datetime
 
@@ -34,7 +34,7 @@ def response(responses):
     return true_resp
 
 def recognition(spoken):
-    with open("json.json", "r") as json_file:
+    with open("json\intents.json", "r") as json_file:
         data = json.load(json_file)
 
     data = data["intents"]
@@ -390,7 +390,7 @@ if __name__ == '__main__' :
                     else:
                         athena_speak("it is " + h + "hours and "+ m +"minutes")
 
-                #telefonar
+
 
                 elif tag == "questions":
                     heard = heard.split()

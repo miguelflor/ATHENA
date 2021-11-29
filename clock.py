@@ -3,6 +3,7 @@ import json
 from playsound import *
 
 while True:
+
     now = datetime.datetime.now()
     h = now.hour
     m = now.minute
