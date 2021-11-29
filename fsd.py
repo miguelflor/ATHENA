@@ -1,3 +1,3 @@
-u = 1
+print("teste")
 
 
