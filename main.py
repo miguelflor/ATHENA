@@ -3,9 +3,9 @@ import subprocess
 import pyttsx3
 import json
 import speech_recognition as sr
-import datetime
+
 import wikipedia
-import clock
+
 import os
 import datetime
 
@@ -34,7 +34,7 @@ def response(responses):
     return true_resp
 
 def recognition(spoken):
-    with open("json.json", "r") as json_file:
+    with open("json\intents.json", "r") as json_file:
         data = json.load(json_file)
 
     data = data["intents"]
@@ -246,9 +246,10 @@ if __name__ == '__main__' :
         
         while True:
 
-            heard = hear()
-            if heard == 0:
-                continue
+            #heard = hear()
+            #if heard == 0:
+            #    continue
+            input(heard)                                                                                           
 
 
             if "athena" in heard:
@@ -286,17 +287,17 @@ if __name__ == '__main__' :
                         else:
                             note = heard
                             break
-                    with open('json.json', 'r') as data:
+                    with open('json\otes.json', 'r') as data:
                         x = json.load(data)
 
                     x["notes"] = x["notes"] + [note]
 
-                    with open("json.json", "w") as data:
+                    with open("json\otes.json", "w") as data:
                         json.dump(x, data, indent=4)
 
                 elif tag == "read_note":
 
-                    with open('json.json' , 'r') as data:
+                    with open('json\otes.json' , 'r') as data:
                         x = json.load(data)
 
                     for notes in x["notes"]:
@@ -369,12 +370,12 @@ if __name__ == '__main__' :
                         "name": name,
                         "num": num
                         }
-                    with open('json.json', 'r') as data:
+                    with open('json\contacts.json', 'r') as data:
                         x = json.load(data)
                         
                     x["contacts"].append(contact)
                     
-                    with open('json.json','w') as data:
+                    with open('json\contacts.json','w') as data:
                         json.dump(x,data,indent=4)
 
 
@@ -390,7 +391,7 @@ if __name__ == '__main__' :
                     else:
                         athena_speak("it is " + h + "hours and "+ m +"minutes")
 
-                #telefonar
+
 
                 elif tag == "questions":
                     heard = heard.split()
@@ -436,12 +437,12 @@ if __name__ == '__main__' :
                     print("ok, "+name_user)
                     athena_speak("ok, "+name_user)
 
-                    with open('json.json', 'r') as data:
+                    with open('json\contacts.json', 'r') as data:
                         dict = json.load(data)
 
                     dict["contacts"][0]["name"] = name_user
 
-                    with open('json.json', 'w') as data:
+                    with open('json\contacts.json', 'w') as data:
                         json.dump(dict, data, indent=4)
 
                 elif tag == "set_alarm":
@@ -498,12 +499,12 @@ if __name__ == '__main__' :
                             "m": m
 
                         }
-                        with open("json.json","r") as data:
+                        with open("json\larms.json","r") as data:
                             json_dict = json.load(data)
 
                         json_dict["alarms"].append(alarm_dict)
 
-                        with open("json.json","w") as data:
+                        with open("json\larms.json","w") as data:
                             json.dump(json_dict,data, indent=4)
 
                         athena_speak("alarm set for "+str(h)+" hours and "+str(m)+" minutes")
@@ -578,12 +579,12 @@ if __name__ == '__main__' :
                                     "m": m
 
                                 }
-                                with open("json.json", "r") as data:
+                                with open("json\larms.json", "r") as data:
                                     json_dict = json.load(data)
 
                                 json_dict["alarms"].append(alarm_dict)
 
-                                with open("json.json", "w") as data:
+                                with open("json\larms.json", "w") as data:
                                     json.dump(json_dict, data, indent=4)
 
                                 athena_speak("alarm set for " + str(h) + " hours and " + str(m) + " minutes")
