@@ -214,6 +214,7 @@ def levenshtein(str2,str1):
     return(m[len(m)-1,len(m[0])-1])
 
 def athena_speak(speech):
+    print(speech+"\n")
     engine.say(speech)
     engine.runAndWait()
 
@@ -246,10 +247,10 @@ if __name__ == '__main__' :
         
         while True:
 
-            #heard = hear()
-            #if heard == 0:
+            # heard = hear()
+            # if heard == 0:
             #    continue
-            input(heard)                                                                                           
+            heard = input("listening...\n")                                                                                     
 
 
             if "athena" in heard:
@@ -383,13 +384,13 @@ if __name__ == '__main__' :
                     athena_speak("your contact has been created ")
 
                 elif tag == "tell_time":
-                    now = datetime.datetime.now
-                    h = now.hour
-                    m = now.minute
+                    now = datetime.datetime.now()
+                    h = str(now.hour)
+                    m = str(now.minute)
                     if m == 0:
-                        athena_speak("it is " + h + "hours")
+                        athena_speak("it is " + h + " hours")
                     else:
-                        athena_speak("it is " + h + "hours and "+ m +"minutes")
+                        athena_speak("it is " + h + " hours and "+ m +" minutes")
 
 
 
@@ -397,18 +398,20 @@ if __name__ == '__main__' :
                     heard = heard.split()
                     print(heard)
                     print(position)
-                    question = ""
+                    question = ''
 
                     k = 0
 
                     for word in heard:
                         k += 1
                         if k > position:
+                            
+                            question = question + ' ' + word
 
-                            question = question + " " + word
 
 
-
+                    
+                    question = repr(str(question))
                     print(question)
                     try:
                         wiki_sum = wikipedia.summary(question)

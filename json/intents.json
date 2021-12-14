@@ -97,6 +97,17 @@
             "resp": [
                 ""
             ]
+        },
+        {
+            "tag":"tell_time",
+            "patterns":[
+                "what time is it",
+                "what's the time",
+                "tell time"],
+            "resp":[
+                ""
+            ]
+
         }
     ]
 
