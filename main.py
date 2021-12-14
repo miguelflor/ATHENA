@@ -393,7 +393,6 @@ if __name__ == '__main__' :
                         athena_speak("it is " + h + " hours and "+ m +" minutes")
 
 
-
                 elif tag == "questions":
                     heard = heard.split()
                     print(heard)
