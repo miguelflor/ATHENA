@@ -43,6 +43,7 @@ def recognition(spoken):
     l = 0
     b = 0
     spoken_comp = ""
+    spoken_true = spoken
     spoken = spoken.split()
     intent = {
         "position":0,
@@ -65,8 +66,16 @@ def recognition(spoken):
 
         for pattern in patterns:
 
+            true_pattern = pattern
             num_words = len(pattern.split())
-
+            #se a expressaõ falada pelo utilizadopr for mais pequena do que a expressão da database intents comparada com ele vai haver uma troca
+            
+            if num_words > len(spoken):
+                    spoken = pattern.split()
+                    pattern = spoken_true
+            else:
+                spoken = spoken_true.split()
+                pattern = true_pattern
             rep = len(spoken) - (num_words - 1)
 
             array_error = {
@@ -78,11 +87,15 @@ def recognition(spoken):
 
                 while l != num_words:
 
-
+                     
                      if l == 0:
                          spoken_comp = spoken[i+l]
                      else:
-                        spoken_comp = spoken_comp + " " + spoken[i+l]
+                        try:
+                            spoken_comp = spoken_comp + " " + spoken[i+l]
+                        except:
+                            print("l="+str(l)+"\n")
+                            print("i="+str(i)+"\n")
 
 
                      l += 1
@@ -219,6 +232,7 @@ def athena_speak(speech):
     engine.runAndWait()
 
 def hear():
+    '''
     r=sr.Recognizer()
 
     print(sr.Microphone())
@@ -238,6 +252,10 @@ def hear():
         return  heard
     print("thinking..")
     athena_speak("thinking..")
+    '''
+    heard=input("Listenning...\n")
+    return heard
+
 
 
 
@@ -247,10 +265,10 @@ if __name__ == '__main__' :
         
         while True:
 
-            # heard = hear()
-            # if heard == 0:
-            #    continue
-            heard = input("listening...\n")                                                                                     
+            heard = hear()
+            if heard == 0:
+                continue
+                                                                                                
 
 
             if "athena" in heard:
