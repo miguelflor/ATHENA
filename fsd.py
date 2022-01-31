@@ -1,32 +1,19 @@
 import json 
 
-def trust(dictionary):
-    p = 0
-    words = []
-
-    for x in dictionary:
-        for y in x:
-            for k in dictionary:
-                if k == y:
-                    if k not in words:
-                        words = words + [k]
-    
-    print(words)
-    with open("text.txt", "a") as txt:
-        txt.write(str(words))
-        txt.close()
-                        
-def trustt(dictionary):
-    for x in dictitonary:
-        print(x)
-
 
 
 with open("json/dictionary.json") as dictt:
     dictionary = json.load(dictt)
 
+word = input("what is the word that  seak defeniction")
 # trust(dictionary)
-trustt(dictionary)
+#trust(dictionary)
+try:
+    print(dictionary[word])
+except:
+    print("asndaçsd")
+
+
 
 
 
