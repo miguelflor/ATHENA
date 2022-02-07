@@ -11,12 +11,14 @@ def clearConsole():
     
 
 
-with open("json/dictionary.json") as dictt:
+with open("json/dictionary.json", encoding='utf-8') as dictt:
     dictionary = json.load(dictt)
 
 i = 0
+
 for x in dictionary:
     i+=1
+
 
 print(i)
 
@@ -50,7 +52,7 @@ for x in dictionary:
         new_defi = defi[1]
     dictionary[x] = new_defi
 
-with open("json/dictionary1.json","w",encoding="utf-16be") as dictt:
+with open("json/dictionary1.json","w",encoding="utf-8") as dictt:
     dictt.write(json.dumps(dictionary,indent=4,ensure_ascii=False))
 
 print('Finish')   
