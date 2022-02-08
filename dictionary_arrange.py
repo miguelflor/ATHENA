@@ -15,8 +15,52 @@ with open("json/dictionary.json", encoding='utf-8') as dictt:
     dictionary = json.load(dictt)
 
 i = 0
-
+rase = False
+print("start")
 for x in dictionary:
+    deff1 = dictionary[x].split(" ")
+    original = dictionary[x]
+    
+    z = 0
+    for v in deff1[:]:
+        lenght = len(v)
+      
+        if lenght != 0:
+            if "[" in v and "]" in v:
+                if "." ==  v[lenght-1]:
+                    print(str(z)+"->>>"+str(len(deff1)))
+                    deff1[z] = "."
+                else:
+                    deff1.remove(v)  
+            elif "[" in v:
+                rase = True
+            elif "]"  in v:
+                rase = False
+                if "." ==  v[lenght-1]:
+                    deff1[z] = "."
+                else:
+                    deff1.remove(v)
+            
+            if rase == True:
+                
+                deff1.remove(v)
+                    
+            
+                
+
+        
+        
+        z+=1
+    deff_str = " "
+    deff_str = deff_str.join(deff1)
+    dictionary[x] = deff_str
+   
+    
+
+        
+        
+
+
     i+=1
 
 
@@ -57,7 +101,7 @@ with open("json/dictionary1.json","w",encoding="utf-8") as dictt:
 
 print('Finish')   
 print(dictionary["cyathophylloid"])
-         
+      
         
 
     
