@@ -14,6 +14,8 @@ def clearConsole():
 with open("json/dictionary.json", encoding='utf-8') as dictt:
     dictionary = json.load(dictt)
 
+
+
 i = 0
 rase = False
 print("start")
@@ -21,51 +23,90 @@ for x in dictionary:
     deff1 = dictionary[x].split(" ")
     original = dictionary[x]
     
-    z = 0
     for v in deff1[:]:
         lenght = len(v)
-      
         if lenght != 0:
             if "[" in v and "]" in v:
                 if "." ==  v[lenght-1]:
-                    print(str(z)+"->>>"+str(len(deff1)))
-                    deff1[z] = "."
+                    print(str(deff1.index(v))+"->>>"+str(len(deff1)))
+                    deff1[deff1.index(v)] = "."
                 else:
-                    deff1.remove(v)  
+                    try:
+                        deff1.remove(v)
+                    except:
+                        pass
+                    
             elif "[" in v:
                 rase = True
             elif "]"  in v:
                 rase = False
                 if "." ==  v[lenght-1]:
-                    deff1[z] = "."
+                    deff1[deff1.index(v)] = "."
                 else:
+                    print(v)
+                    print(deff1.index(v))
                     deff1.remove(v)
             
             if rase == True:
-                
-                deff1.remove(v)
+                try:
+                    deff1.remove(v)
+                except:
+                    pass
                     
-            
-                
-
         
-        
-        z+=1
     deff_str = " "
     deff_str = deff_str.join(deff1)
     dictionary[x] = deff_str
-   
-    
 
+
+    i+=1
+
+#parentises agr
+
+for x in dictionary:
+    deff1 = dictionary[x].split(" ")
+    original = dictionary[x]
+    
+    for v in deff1[:]:
+        lenght = len(v)
+        if lenght != 0:
+            if "(" in v and ")" in v:
+                if "." ==  v[lenght-1]:
+                    print(str(deff1.index(v))+"->>>"+str(len(deff1)))
+                    deff1[deff1.index(v)] = "."
+                else:
+                    try:
+                        deff1.remove(v)
+                    except:
+                        pass
+                    
+            elif "(" in v:
+                rase = True
+            elif ")"  in v:
+                rase = False
+                if "." ==  v[lenght-1]:
+                    deff1[deff1.index(v)] = "."
+                else:
+                    print(v)
+                    print(deff1.index(v))
+                    deff1.remove(v)
+            
+            if rase == True:
+                try:
+                    deff1.remove(v)
+                except:
+                    pass
+                    
         
-        
+    deff_str = " "
+    deff_str = deff_str.join(deff1)
+    dictionary[x] = deff_str
 
 
     i+=1
 
 
-print(i)
-
+#primeira frase 
 barra = "[                    ]"
 
 #cada barra corresponde a 5%
@@ -95,6 +136,9 @@ for x in dictionary:
     else:
         new_defi = defi[1]
     dictionary[x] = new_defi
+
+      
+
 
 with open("json/dictionary1.json","w",encoding="utf-8") as dictt:
     dictt.write(json.dumps(dictionary,indent=4,ensure_ascii=False))
