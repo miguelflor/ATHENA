@@ -610,6 +610,9 @@ if __name__ == '__main__' :
                                 athena_speak("alarm set for " + str(h) + " hours and " + str(m) + " minutes")
                                 break
 
+                elif tag == "defi":
+                    heardcopy = hear.split(" ")
+                    print(heardcopy)
 
 
 

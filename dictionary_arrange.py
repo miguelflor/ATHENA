@@ -14,8 +14,6 @@ def clearConsole():
 with open("json/dictionary.json", encoding='utf-8') as dictt:
     dictionary = json.load(dictt)
 
-
-
 i = 0
 rase = False
 print("start")
@@ -105,6 +103,15 @@ for x in dictionary:
 
     i+=1
 
+
+
+for v in dictionary:
+    deff1 = dictionary[x].split(" ")
+    original = dictionary[x]
+
+    for q in deff1[:]:
+        if ("imp." in q) or ("obs." in q) or ("p." in q) or ("n." in q) or ("i." in q) or ("v." in q) or ("n." in q) or ("a." in q) or("pl." in q):
+            deff1.remove(q)
 
 #primeira frase 
 barra = "[                    ]"
