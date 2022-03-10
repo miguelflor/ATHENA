@@ -611,8 +611,20 @@ if __name__ == '__main__' :
                                 break
 
                 elif tag == "defi":
-                    heardcopy = hear.split(" ")
-                    print(heardcopy)
+                    heardcopy = heard.split(" ")
+                    defenicao = ""
+                    copy = []
+                    
+                    while True:
+                        copy = copy + heardcopy[position + i]
+                        i+=1
+                        if position+i > len(hearcopy):
+                            break
+                    
+                    print(copy)
+
+                        
+
 
 
 
