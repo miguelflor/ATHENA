@@ -42,7 +42,7 @@
             "resp": [
                 "What's your note?"
             ],
-            "priority": 1
+            "priority": 9
         },
         {
             "tag": "new_cont",
@@ -54,7 +54,7 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 8
         },
         {
             "tag": "read_note",
@@ -122,10 +122,10 @@
         {
             "tag": "defi",
             "patterns": [
-                "the meaning of",
-                "the meaning of",
-                "the definition of",
-                "the definiction"
+                "meaning of",
+                "meaning of",
+                "definition of",
+                "the definition of"
             ],
             "resp": [
                 ""

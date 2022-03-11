@@ -275,7 +275,7 @@ if __name__ == '__main__' :
 
 
                 intent = recognition(heard)
-                position = intent["position"]
+                position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
                 tag = intent["tag"]
                 resp = intent["resp"]
                 print(tag)
@@ -614,65 +614,25 @@ if __name__ == '__main__' :
                     heardcopy = heard.split(" ")
                     defenicao = ""
                     copy = []
+                    i = 0
                     
                     while True:
-                        copy = copy + heardcopy[position + i]
+                        print(i)
+                        copy = copy + [heardcopy[position + i]]
                         i+=1
-                        if position+i > len(hearcopy):
+                        if position+1+i > len(heardcopy):
                             break
                     
-                    print(copy)
-
-                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-
-
-
-
-                        
                     
-
-
-
-
-
-
-                        
+                    word = " ".join(copy)
+                    with open("json\dictionary1.json") as data:
+                        deff = json.load(data)
                     
+                    if word in deff:
+                        resp = deff[word]
+                    else: 
+                            
+                        resp = response(["I don't know the deffenition of that word","I don't know the meaning of that word","I don't know","that word is not in my dictionary"])
                     
-                        
-
-
-
-
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    athena_speak(resp)
+                   

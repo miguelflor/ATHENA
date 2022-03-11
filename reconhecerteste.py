@@ -159,7 +159,8 @@ def response(responses):
 
 if __name__ == '__main__':
     print(levenshtein("athena read note","add a new contact"))
-
+    t = ["asdasd","asdasd","asdasdasd"]
+    print(" ".join(t))
 
 
 
