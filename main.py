@@ -632,7 +632,7 @@ if __name__ == '__main__' :
                     i = 0
                     
                     while True:
-                        print(i)
+                      
                         copy = copy + [heardcopy[position + i]]
                         i+=1
                         if position+1+i > len(heardcopy):
@@ -651,6 +651,7 @@ if __name__ == '__main__' :
                             knowledge = "there are " + len(deffs) + " definitions."
                             athena_speak(knowledge)
                             ii = 0
+                            resp = ""
                             for op in deffs:
                                 ii+=1
                                 resp = resp + ordinal(ii)+"."+op
