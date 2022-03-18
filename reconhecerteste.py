@@ -1,6 +1,8 @@
 import numpy as np
 import json
 
+from main import athena_speak
+
 
 def levenshtein(str2,str1):
     m = np.array([[]])
@@ -156,12 +158,30 @@ def response(responses):
 
     return true_resp
 
+def ordinal( n ):
+
+    suffix = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
+
+    if n < 0:
+        n *= -1
+
+    n = int(n)
+
+    if n % 100 in (11,12,13):
+        s = 'th'
+    else:
+        s = suffix[n % 10]
+
+    return str(n) + s
 
 if __name__ == '__main__':
-    print(levenshtein("athena read note","add a new contact"))
-
-
-
+    athena_speak("there are 3 definitions")
+    i = 0
+    while True:
+        i+=1
+        athena_speak(ordinal(i))
+        if i==10:
+            break
 
 
 

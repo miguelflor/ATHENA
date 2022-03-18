@@ -1,6 +1,5 @@
 {
-  "intents": [
-        {
+    "intents": [{
             "tag": "goodbyes",
             "patterns": [
                 "goodbye",
@@ -16,7 +15,8 @@
                 "bye",
                 "goodbye",
                 "see you later"
-            ]
+            ],
+            "priority": 4
         },
         {
             "tag": "greet",
@@ -29,7 +29,8 @@
             ],
             "resp": [
                 ""
-            ]
+            ],
+            "priority": 4
         },
         {
             "tag": "new_note",
@@ -40,7 +41,8 @@
             ],
             "resp": [
                 "What's your note?"
-            ]
+            ],
+            "priority": 9
         },
         {
             "tag": "new_cont",
@@ -51,7 +53,8 @@
             ],
             "resp": [
                 ""
-            ]
+            ],
+            "priority": 8
         },
         {
             "tag": "read_note",
@@ -61,7 +64,8 @@
             ],
             "resp": [
                 ""
-            ]
+            ],
+            "priority": 1
         },
         {
             "tag": "questions",
@@ -70,11 +74,13 @@
                 "what's",
                 "who is",
                 "who are",
-                "what are"
+                "what are",
+                "who whare"
             ],
             "resp": [
                 ""
-            ]
+            ],
+            "priority": 1
         },
         {
             "tag": "call_me",
@@ -85,7 +91,8 @@
             ],
             "resp": [
                 ""
-            ]
+            ],
+            "priority": 1
         },
         {
             "tag": "set_alarm",
@@ -96,19 +103,36 @@
             ],
             "resp": [
                 ""
-            ]
+            ],
+            "priority": 1
         },
         {
-            "tag":"tell_time",
-            "patterns":[
+            "tag": "tell_time",
+            "patterns": [
                 "what time is it",
                 "what's the time",
-                "tell time"],
-            "resp":[
+                "tell time"
+            ],
+            "resp": [
                 ""
-            ]
+            ],
+            "priority": 1
 
+        },
+        {
+            "tag": "defi",
+            "patterns": [
+                "meaning of",
+                "meaning of",
+                "definition of",
+                "the definition of"
+            ],
+            "resp": [
+                ""
+            ],
+            "priority": 1
         }
+
     ]
 
 }

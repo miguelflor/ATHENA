@@ -256,6 +256,21 @@ def hear():
     heard=input("Listenning...\n")
     return heard
 
+def ordinal( n ):
+
+    suffix = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
+
+    if n < 0:
+        n *= -1
+
+    n = int(n)
+
+    if n % 100 in (11,12,13):
+        s = 'th'
+    else:
+        s = suffix[n % 10]
+
+    return str(n) + s
 
 
 
@@ -275,7 +290,7 @@ if __name__ == '__main__' :
 
 
                 intent = recognition(heard)
-                position = intent["position"]
+                position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
                 tag = intent["tag"]
                 resp = intent["resp"]
                 print(tag)
@@ -610,54 +625,40 @@ if __name__ == '__main__' :
                                 athena_speak("alarm set for " + str(h) + " hours and " + str(m) + " minutes")
                                 break
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-
-
-
-
-                        
+                elif tag == "defi":
+                    heardcopy = heard.split(" ")
+                    defenicao = ""
+                    copy = []
+                    i = 0
                     
-
-
-
-
-
-
-                        
+                    while True:
+                      
+                        copy = copy + [heardcopy[position + i]]
+                        i+=1
+                        if position+1+i > len(heardcopy):
+                            break
                     
                     
-                        
-
-
-
-
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    word = " ".join(copy)
+                    with open("json\dictionary1.json") as data:
+                        dictionary = json.load(data)
+                    
+                    if word in dictionary:
+                        deffs = dictionary[word]
+                        if len(deffs) == 1:
+                            resp = deffs[0]
+                        else:
+                            knowledge = "there are " + len(deffs) + " definitions."
+                            athena_speak(knowledge)
+                            ii = 0
+                            resp = ""
+                            for op in deffs:
+                                ii+=1
+                                resp = resp + ordinal(ii)+"."+op
+                                #estive aqui provavelmente funciona mas vou dormir não testado  
+                    else: 
+                            
+                        resp = response(["I don't know the deffenition of that word","I don't know the meaning of that word","I don't know","that word is not in my dictionary"])
+                    
+                    athena_speak(resp)
+                   
