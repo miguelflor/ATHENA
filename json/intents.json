@@ -16,7 +16,8 @@
                 "goodbye",
                 "see you later"
             ],
-            "priority": 4
+            "priority": 4,
+            "question": false
         },
         {
             "tag": "greet",
@@ -30,7 +31,8 @@
             "resp": [
                 ""
             ],
-            "priority": 4
+            "priority": 4,
+            "question": false
         },
         {
             "tag": "new_note",
@@ -42,7 +44,8 @@
             "resp": [
                 "What's your note?"
             ],
-            "priority": 9
+            "priority": 9,
+            "question": false
         },
         {
             "tag": "new_cont",
@@ -54,7 +57,8 @@
             "resp": [
                 ""
             ],
-            "priority": 8
+            "priority": 8,
+            "question": false
         },
         {
             "tag": "read_note",
@@ -65,7 +69,8 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 1,
+            "question": false
         },
         {
             "tag": "questions",
@@ -80,7 +85,8 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 1,
+            "question": true
         },
         {
             "tag": "call_me",
@@ -92,7 +98,8 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 1,
+            "question": false
         },
         {
             "tag": "set_alarm",
@@ -104,7 +111,8 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 1,
+            "question": false
         },
         {
             "tag": "tell_time",
@@ -116,7 +124,8 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 7,
+            "question": false
 
         },
         {
@@ -130,7 +139,8 @@
             "resp": [
                 ""
             ],
-            "priority": 1
+            "priority": 9,
+            "question": true
         }
 
     ]

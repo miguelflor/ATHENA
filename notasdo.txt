@@ -1,2 +1,2 @@
 ver de onde o dicionário foi tirado history of chrome XD
- 
+dicionário - https://raw.githubusercontent.com/manasjoshi1/Json-Dictionary-in-Python/master/076%20data.json;
