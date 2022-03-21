@@ -49,18 +49,21 @@ def recognition(spoken):
         "position":0,
         "tag": "",
         "resp":"",
-        "erro_min":0
+        "erro_min":0,
+        "priority":0
     }
 
 
 
     for x in data:
         patterns = x['patterns']
-
+        priority = x['priority']
+        question = x['question']
 
         array_error_intent ={
             "position": [],
             "error": []
+           
 
         }
 
@@ -151,6 +154,8 @@ def recognition(spoken):
                     position_intent = array_error_intent["position"][e]
 
             e += 1
+        if question == True and position_intent == len(spoken):
+            min_error_intent = min_error_intent + 0.7
 
         if b == 0:
 
@@ -158,12 +163,24 @@ def recognition(spoken):
             intent["tag"] = x["tag"]
             intent["resp"] = x["resp"]
             intent["erro_min"] = min_error_intent
+            intent["priority"] = priority
         else:
             if min_error_intent < intent["erro_min"] :
                 intent["erro_min"] = min_error_intent
                 intent["resp"] = x["resp"]
                 intent["tag"] = x["tag"]
                 intent["position"] = position_intent
+                intent["priority"] = priority
+            elif min_error_intent == intent["erro_min"]:
+                if priority > intent["priority"]:
+                    intent["erro_min"] = min_error_intent
+                    intent["resp"] = x["resp"]
+                    intent["tag"] = x["tag"]
+                    intent["position"] = position_intent
+                    intent["priority"] = priority
+
+
+                
         print("-")
         b += 1
 
@@ -232,7 +249,7 @@ def athena_speak(speech):
     engine.runAndWait()
 
 def hear():
-    '''
+    
     r=sr.Recognizer()
 
     print(sr.Microphone())
@@ -250,11 +267,11 @@ def hear():
             return "None"
 
         return  heard
-    print("thinking..")
-    athena_speak("thinking..")
-    '''
-    heard=input("Listenning...\n")
-    return heard
+    # print("thinking..")
+    # athena_speak("thinking..")
+    
+    # heard=input("Listenning...\n")
+    # return heard
 
 def ordinal( n ):
 
@@ -288,11 +305,15 @@ if __name__ == '__main__' :
 
             if "athena" in heard:
 
-
-                intent = recognition(heard)
-                position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
-                tag = intent["tag"]
-                resp = intent["resp"]
+                if len(heard) != 1:        
+                    intent = recognition(heard)
+                    position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
+                    if intent["erro_min"] <= 0.35:
+                        tag = intent["tag"]
+                        resp = intent["resp"]
+                else:
+                    tag = "none"
+                
                 print(tag)
                 if tag == "goodbyes":
                     athena_speak(response(resp))
@@ -640,7 +661,7 @@ if __name__ == '__main__' :
                     
                     
                     word = " ".join(copy)
-                    with open("json\dictionary1.json") as data:
+                    with open("json\dictionary1.json", "r", encoding="utf8")  as data:
                         dictionary = json.load(data)
                     
                     if word in dictionary:
@@ -648,13 +669,14 @@ if __name__ == '__main__' :
                         if len(deffs) == 1:
                             resp = deffs[0]
                         else:
-                            knowledge = "there are " + len(deffs) + " definitions."
+                            knowledge = "there are " + str(len(deffs)) + " definitions."
                             athena_speak(knowledge)
                             ii = 0
                             resp = ""
+                            
                             for op in deffs:
                                 ii+=1
-                                resp = resp + ordinal(ii)+"."+op
+                                resp = resp + " " + ordinal(ii)+" . "+op
                                 #estive aqui provavelmente funciona mas vou dormir não testado  
                     else: 
                             
