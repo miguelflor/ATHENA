@@ -141,6 +141,22 @@
             ],
             "priority": 9,
             "question": true
+        },
+        {
+            "tag": "calculations",
+            "patterns":[
+                "times",
+                "more",
+                "the power off",
+                "multiply",
+                "divided by"
+            ],
+            "resp": [
+                ""
+            ],
+            "priority":8,
+            "question": true
+            
         }
 
     ]
