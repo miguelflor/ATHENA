@@ -1,12 +1,16 @@
 {
-  "contacts": [
-    {
-      "name": "miguel",
-      "number": "960462802"
-    },
-    {
-      "name": "mom",
-      "num": "912482741"
-    }
-  ]
+    "contacts": [
+        {
+            "name": "miguel",
+            "number": "960462802"
+        },
+        {
+            "name": "mom",
+            "num": "912482741"
+        },
+        {
+            "name": "pedro",
+            "num": "912341647"
+        }
+    ]
 }

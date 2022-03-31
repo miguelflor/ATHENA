@@ -39,7 +39,8 @@
             "patterns": [
                 "new note",
                 "write a note",
-                "add a note"
+                "add a note",
+                "write me"
             ],
             "resp": [
                 "What's your note?"
@@ -134,7 +135,9 @@
                 "meaning of",
                 "meaning of",
                 "definition of",
-                "the definition of"
+                "the definition of",
+                "definition of the word",
+                "the defenition of the word"
             ],
             "resp": [
                 ""
