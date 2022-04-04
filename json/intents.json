@@ -147,7 +147,7 @@
         },
         {
             "tag": "calculations",
-            "patterns":[
+            "patterns": [
                 "times",
                 "more",
                 "the power off",
@@ -157,9 +157,33 @@
             "resp": [
                 ""
             ],
-            "priority":8,
+            "priority": 8,
             "question": true
-            
+
+        },
+        {
+            "tag": "delete",
+            "patterns": [
+                "delete the",
+                "remove the",
+                "kill the",
+                "eradicate the",
+                "scratch out the"
+            ],
+            "priority": 3,
+            "question": false
+        },
+        {
+            "tag": "get_number",
+            "patterns": [
+                "What's the phone number of",
+                "What is the number of",
+                "What's the number of",
+                "What is the phone number of"
+
+            ],
+            "priority": 9,
+            "question": true
         }
 
     ]

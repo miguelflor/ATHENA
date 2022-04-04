@@ -34,9 +34,8 @@ def response(responses):
 
     return true_resp
 
-def recognition(spoken):
-    with open("json\intents.json", "r") as json_file:
-        data = json.load(json_file)
+def recognition(spoken,data,intent_specify=["all"]):
+    
 
     data = data["intents"]
 
@@ -54,7 +53,15 @@ def recognition(spoken):
         "priority":0
     }
 
+    if intent_specify[0] != "all":
+        new_data = []
+        for z in data:
+            if z["tag"] in intent_specify:
+                new_data = new_data + [z]
 
+
+    
+    
 
     for x in data:
         patterns = x['patterns']
@@ -306,8 +313,10 @@ if __name__ == '__main__' :
 
             if "athena" in heard and len(heard)>1:
 
-                if len(heard) != 1:        
-                    intent = recognition(heard)
+                if len(heard) != 1:     
+                    with open("json\intents.json", "r") as json_file:
+                          data_intents = json.load(json_file)   
+                    intent = recognition(heard,data_intents)
                     position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
                     if intent["erro_min"] <= 0.45:
                         tag = intent["tag"]
@@ -357,9 +366,11 @@ if __name__ == '__main__' :
 
                     with open('json\otes.json' , 'r') as data:
                         x = json.load(data)
-
+                    n_notes = 0
+                    temp_word_note = " note"
                     for notes in x["notes"]:
-                        athena_speak(notes)
+                        n_notes +=1
+                        athena_speak(ordinal(n_notes)+temp_word_note+" : "+ notes)
 
                 elif tag == "new_cont":
                     athena_speak("what is the name of your contact ?")
@@ -730,5 +741,12 @@ if __name__ == '__main__' :
                         resp = response(["I don't know the deffenition of that word","I don't know the meaning of that word","I don't know","that word is not in my dictionary"])
                     
                     athena_speak(resp)
+
+                elif tag == "delete":
+                    #ver o que e que e para dar delete
+                    #json delete_temes.json
+                    #if 70% de erro
+                    
+
 
                
