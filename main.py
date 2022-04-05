@@ -94,9 +94,9 @@ def recognition(spoken,data,intent_specify=["all"]):
                 "error":[]
             }
 
-            while i != rep:
+            while i < rep:
 
-                while l != num_words:
+                while l < num_words:
 
                      
                      if l == 0:
@@ -271,7 +271,7 @@ def hear():
             print(f"user said:{heard}\n")
             heard = heard.lower()
         except Exception as e:
-            athena_speak("say that again please!")
+            #athena_speak("say that again please!")
             return "None"
 
         return  heard
@@ -367,10 +367,10 @@ if __name__ == '__main__' :
                     with open('json\otes.json' , 'r') as data:
                         x = json.load(data)
                     n_notes = 0
-                    temp_word_note = " note"
+                    
                     for notes in x["notes"]:
                         n_notes +=1
-                        athena_speak(ordinal(n_notes)+temp_word_note+" : "+ notes)
+                        athena_speak("note number "+str(n_notes)+" : "+ notes)
 
                 elif tag == "new_cont":
                     athena_speak("what is the name of your contact ?")
@@ -744,6 +744,22 @@ if __name__ == '__main__' :
 
                 elif tag == "delete":
                     #ver o que e que e para dar delete
+                    with open("json/delete_temes.json", "r") as json_data:
+                        delete_data = json.load(json_data)
+                    delete_intent = recognition(heard,delete_data,["number","contacts","notes"])
+                    t = ["one","two","three","four","five","six","seven","eight","nine","ten"]
+                    heard_split = heard.split(" ")
+                    heard_split_place = 0
+                    for n in heard_split[:]:
+
+                        if n in t:
+                            l = 0
+                            for k in t:
+                                if n == k:
+                                    heard_split[heard_split_place] = k
+                        heard_split_place += 1
+                    
+
                     #json delete_temes.json
                     #if 70% de erro
                     
