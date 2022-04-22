@@ -1,0 +1,29 @@
+{"intents":[{
+        "tag": "number",
+        "patterns": [
+            "phone number of",
+            "the number of",
+            "number of"
+        ],
+        "resp":[],
+        "priority": 6,
+        "questrion": false
+
+    },
+    {
+        "tag": "contacts",
+        "patterns": [
+            "the contact of",
+            "contact of"
+
+        ]
+    },
+    {
+        "tag":"notes",
+        "patterns":[
+            "note",
+            "notacion"          
+        ]    
+    }
+    
+]}

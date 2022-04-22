@@ -1,3 +1,4 @@
+from tkinter import NO
 import numpy as np
 import subprocess
 import pyttsx3
@@ -33,9 +34,8 @@ def response(responses):
 
     return true_resp
 
-def recognition(spoken):
-    with open("json\intents.json", "r") as json_file:
-        data = json.load(json_file)
+def recognition(spoken,data,intent_specify=["all"]):
+    
 
     data = data["intents"]
 
@@ -53,7 +53,15 @@ def recognition(spoken):
         "priority":0
     }
 
+    if intent_specify[0] != "all":
+        new_data = []
+        for z in data:
+            if z["tag"] in intent_specify:
+                new_data = new_data + [z]
 
+
+    
+    
 
     for x in data:
         patterns = x['patterns']
@@ -86,9 +94,9 @@ def recognition(spoken):
                 "error":[]
             }
 
-            while i != rep:
+            while i < rep:
 
-                while l != num_words:
+                while l < num_words:
 
                      
                      if l == 0:
@@ -255,7 +263,7 @@ def hear():
     print(sr.Microphone())
     with sr.Microphone() as source:
         print("Listening...")
-        r.adjust_for_ambient_noise(source, duration=1)
+        r.adjust_for_ambient_noise(source, duration=4)
         audio=r.listen(source)
 
         try:
@@ -263,15 +271,15 @@ def hear():
             print(f"user said:{heard}\n")
             heard = heard.lower()
         except Exception as e:
-           # athena_speak("say that again please!")
+            #athena_speak("say that again please!")
             return "None"
 
         return  heard
-    # print("thinking..")
-    # athena_speak("thinking..")
-    
-    # heard=input("Listenning...\n")
-    # return heard
+        # print("thinking..")
+        # athena_speak("thinking..")
+        
+        # heard=input("Listenning...\n")
+        # return heard
 
 def ordinal( n ):
 
@@ -303,14 +311,18 @@ if __name__ == '__main__' :
                                                                                                 
 
 
-            if "athena" in heard:
+            if "athena" in heard and len(heard)>1:
 
-                if len(heard) != 1:        
-                    intent = recognition(heard)
+                if len(heard) != 1:     
+                    with open("json\intents.json", "r") as json_file:
+                          data_intents = json.load(json_file)   
+                    intent = recognition(heard,data_intents)
                     position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
-                    if intent["erro_min"] <= 0.35:
+                    if intent["erro_min"] <= 0.45:
                         tag = intent["tag"]
                         resp = intent["resp"]
+                    else:
+                        tag = "none"
                 else:
                     tag = "none"
                 
@@ -354,9 +366,11 @@ if __name__ == '__main__' :
 
                     with open('json\otes.json' , 'r') as data:
                         x = json.load(data)
-
+                    n_notes = 0
+                    
                     for notes in x["notes"]:
-                        athena_speak(notes)
+                        n_notes +=1
+                        athena_speak("note number "+str(n_notes)+" : "+ notes)
 
                 elif tag == "new_cont":
                     athena_speak("what is the name of your contact ?")
@@ -488,18 +502,61 @@ if __name__ == '__main__' :
                     for u in heard:
                         i+=1
                         if (position +1) == i:
-                            name_user = u
+                            new_name_user = u
+    	            
+                    if new_name_user == None:
+                        athena_speak("How can i call you?")
+                        while True:
+                            heard = hear()
+                            if heard == 0:
+                                continue
+                            else:
+                                note = heard
+                                break
+                        
+                        if len(heard) != 1:        
+                            intent = recognition(heard)
+                            position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
+                            if intent["erro_min"] <= 0.45:
+                                tag = intent["tag"]
+                                resp = intent["resp"]
+                            else:
+                                tag = "none"
+                        else:
+                            tag = "none"
+                        
+                        if tag=="call_me":
 
-                    print("ok, "+name_user)
-                    athena_speak("ok, "+name_user)
+                            heard = heard.split()
 
-                    with open('json\contacts.json', 'r') as data:
-                        dict = json.load(data)
+                            i = 0
 
-                    dict["contacts"][0]["name"] = name_user
+                            for u in heard:
+                                i+=1
+                                if (position +1) == i:
+                                    new_name_user = u
 
-                    with open('json\contacts.json', 'w') as data:
-                        json.dump(dict, data, indent=4)
+                            if (len(heard) == 1) or (len(heard) == 2):
+                                new_name_user = " ".join(heard)
+
+
+                            
+                        
+
+                    if new_name_user != None:
+                        print("ok, "+new_name_user)
+                        athena_speak("ok, "+new_name_user)
+                        with open('json\contacts.json', 'r') as data:
+                            dict = json.load(data)
+
+                        dict["contacts"][0]["name"] = new_name_user
+
+                        with open('json\contacts.json', 'w') as data:
+                            json.dump(dict, data, indent=4)
+                    else:
+                        athena_speak(response(["I didn't understand how i should call you","I didn't understant how i what should I call you"]))
+                    new_name_user = None
+                    
 
                 elif tag == "set_alarm":
                     choice = 0
@@ -661,6 +718,7 @@ if __name__ == '__main__' :
                     
                     
                     word = " ".join(copy)
+                    word.replace(" ","",1)
                     with open("json\dictionary1.json", "r", encoding="utf8")  as data:
                         dictionary = json.load(data)
                     
@@ -683,4 +741,28 @@ if __name__ == '__main__' :
                         resp = response(["I don't know the deffenition of that word","I don't know the meaning of that word","I don't know","that word is not in my dictionary"])
                     
                     athena_speak(resp)
-                   
+
+                elif tag == "delete":
+                    #ver o que e que e para dar delete
+                    with open("json/delete_temes.json", "r") as json_data:
+                        delete_data = json.load(json_data)
+                    delete_intent = recognition(heard,delete_data,["number","contacts","notes"])
+                    t = ["one","two","three","four","five","six","seven","eight","nine","ten"]
+                    heard_split = heard.split(" ")
+                    heard_split_place = 0
+                    for n in heard_split[:]:
+
+                        if n in t:
+                            l = 0
+                            for k in t:
+                                if n == k:
+                                    heard_split[heard_split_place] = k
+                        heard_split_place += 1
+                    
+
+                    #json delete_temes.json
+                    #if 70% de erro
+                    
+
+
+               

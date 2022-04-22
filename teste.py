@@ -1,26 +1,21 @@
-import json
-import string
-from sys import set_coroutine_origin_tracking_depth
+heard = input()
+w = ["one","two","three","four","five","six","seven","eight","nine","ten"]
+n = ["1","2","3","4","5","6","7","8","9","10"]
+heard_split = heard.split(" ")
 
-from more_itertools import substrings
+heard_split_place = 0
+for n in heard_split[:]:
+    
+    if n in w:
+        l = 0
+        print(n)
+        for k in w:
+            if n == k:
+                print(heard_split[heard_split_place])
+                print(n[l])
+                heard_split[heard_split_place] = n[l]
+                
+        l+=1
+    heard_split_place += 1
 
-def ordinal( n ):
-
-    suffix = ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th']
-
-    if n < 0:
-        n *= -1
-
-    n = int(n)
-
-    if n % 100 in (11,12,13):
-        s = 'th'
-    else:
-        s = suffix[n % 10]
-
-    return str(n) + s
-
-
-i = [1,2,3,4,5,6,7,8,9,190,4,534,53,45,34]
-for y in i:
-     print(ordinal(y))
+print(" ".join(heard_split))

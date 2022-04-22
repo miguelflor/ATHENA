@@ -39,7 +39,8 @@
             "patterns": [
                 "new note",
                 "write a note",
-                "add a note"
+                "add a note",
+                "write me"
             ],
             "resp": [
                 "What's your note?"
@@ -134,10 +135,52 @@
                 "meaning of",
                 "meaning of",
                 "definition of",
-                "the definition of"
+                "the definition of",
+                "definition of the word",
+                "the defenition of the word"
             ],
             "resp": [
                 ""
+            ],
+            "priority": 9,
+            "question": true
+        },
+        {
+            "tag": "calculations",
+            "patterns": [
+                "times",
+                "more",
+                "the power off",
+                "multiply",
+                "divided by"
+            ],
+            "resp": [
+                ""
+            ],
+            "priority": 8,
+            "question": true
+
+        },
+        {
+            "tag": "delete",
+            "patterns": [
+                "delete the",
+                "remove the",
+                "kill the",
+                "eradicate the",
+                "scratch out the"
+            ],
+            "priority": 3,
+            "question": false
+        },
+        {
+            "tag": "get_number",
+            "patterns": [
+                "What's the phone number of",
+                "What is the number of",
+                "What's the number of",
+                "What is the phone number of"
+
             ],
             "priority": 9,
             "question": true
