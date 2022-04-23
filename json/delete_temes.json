@@ -7,7 +7,7 @@
         ],
         "resp":[],
         "priority": 6,
-        "questrion": false
+        "question": false
 
     },
     {
@@ -16,14 +16,19 @@
             "the contact of",
             "contact of"
 
-        ]
+        ],"resp":[],
+        "priority": 7,
+        "question": false
     },
     {
         "tag":"notes",
         "patterns":[
             "note",
             "notacion"          
-        ]    
+        ],
+        "resp":[],
+        "priority": 9,
+        "question": false 
     }
     
 ]}
