@@ -169,6 +169,8 @@
                 "kill the",
                 "eradicate the",
                 "scratch out the"
+            ],"resp": [
+                ""
             ],
             "priority": 3,
             "question": false
@@ -181,6 +183,8 @@
                 "What's the number of",
                 "What is the phone number of"
 
+            ],"resp": [
+                ""
             ],
             "priority": 9,
             "question": true

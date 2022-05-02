@@ -5,7 +5,7 @@
             "the number of",
             "number of"
         ],
-        "resp":[],
+        "resp":[""],
         "priority": 6,
         "question": false
 
@@ -16,7 +16,7 @@
             "the contact of",
             "contact of"
 
-        ],"resp":[],
+        ],"resp":[""],
         "priority": 7,
         "question": false
     },
@@ -26,7 +26,7 @@
             "note",
             "notacion"          
         ],
-        "resp":[],
+        "resp":[""],
         "priority": 9,
         "question": false 
     }

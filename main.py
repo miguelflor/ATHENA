@@ -267,12 +267,15 @@ def hear():
         audio=r.listen(source)
 
         try:
-            heard=r.recognize_google(audio,language='en-in')
+            heard=r.recognize_sphinx(audio,language='en-US')
             print(f"user said:{heard}\n")
             heard = heard.lower()
-        except Exception as e:
+        except sr.UnknownValueError:
             #athena_speak("say that again please!")
             return "None"
+        except sr.RequestError as e:
+            print("Sphinx error; {0}".format(e))
+
 
         return  heard
         # print("thinking..")
@@ -437,7 +440,7 @@ if __name__ == '__main__' :
 
                     contact = {
                         "name": name,
-                        "num": num
+                        "number": num
                         }
                     with open('json\contacts.json', 'r') as data:
                         x = json.load(data)
