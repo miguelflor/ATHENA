@@ -33,39 +33,43 @@ id_user = mysql_con.ID_USER
 # with open("json/contacts.json" , "w") as new_json:
 #     json.dump(contacts_dict,new_json,indent=4)
 
+#update json
+# with open("json/intents.json","r") as intents_json:
+#     intents_json = json.load(intents_json)
+# real_intents_json = intents_json["intents"]
 
-with open("json/intents.json","r") as intents_json:
-    intents_json = json.load(intents_json)
-real_intents_json = intents_json["intents"]
+# o = 0
+# for i in real_intents_json[:]:
+#     i["patterns"] = []
+#     i["resps"] = []
+#     real_intents_json[o] = i
+#     o +=1
 
-o = 0
-for i in real_intents_json[:]:
-    i["patterns"] = []
-    i["resps"] = []
-    real_intents_json[o] = i
-    o +=1
-
-intents_json["intents"] = real_intents_json
+# intents_json["intents"] = real_intents_json
 
 
-q = "SELECT intents.tag,patterns_intent.pattern FROM intents INNER JOIN patterns_intent ON intents.id = patterns_intent.id_intent WHERE intents.id_user = %s" %(id_user)
+# q = "SELECT intents.tag,patterns_intent.pattern FROM intents INNER JOIN patterns_intent ON intents.id = patterns_intent.id_intent WHERE intents.id_user = %s" %(id_user)
 
-mysql_con.CONN.execute(q)
-data = mysql_con.CONN.fetchall()
+# mysql_con.CONN.execute(q)
+# data = mysql_con.CONN.fetchall()
 
-print(data)
+# print(data)
 
  
 
-o=0
-for g in real_intents_json[:]:
-    tag = g["tag"]
+# o=0
+# for g in real_intents_json[:]:
+#     tag = g["tag"]
 
-    for l in data[:]:
-        if l[0] == tag:
-            real_intents_json[o]["patterns"] = real_intents_json[o]["patterns"] + [l[1]]
+#     for l in data[:]:
+#         if l[0] == tag:
+#             real_intents_json[o]["patterns"] = real_intents_json[o]["patterns"] + [l[1]]
     
-    o+=1
+#     o+=1
 
-print(real_intents_json)
+# print(real_intents_json)
+
+#update delete
+with open("delete_temes.json") as on:
+    data_delete = json.load(on)
 
