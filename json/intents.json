@@ -1,5 +1,6 @@
 {
-    "intents": [{
+    "intents": [
+        {
             "tag": "goodbyes",
             "patterns": [
                 "goodbye",
@@ -10,14 +11,10 @@
                 "see you later",
                 "go away"
             ],
-            "resp": [
-                "I will go back to Olympus",
-                "bye",
-                "goodbye",
-                "see you later"
-            ],
+            "resp": [],
             "priority": 4,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "greet",
@@ -28,11 +25,10 @@
                 "good evening",
                 "good afternoon"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 4,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "new_note",
@@ -42,11 +38,10 @@
                 "add a note",
                 "write me"
             ],
-            "resp": [
-                "What's your note?"
-            ],
+            "resp": [],
             "priority": 9,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "new_cont",
@@ -55,11 +50,10 @@
                 "new contact",
                 "add a new contact"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 8,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "read_note",
@@ -67,11 +61,10 @@
                 "read note",
                 "read a note"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 1,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "questions",
@@ -83,11 +76,10 @@
                 "what are",
                 "who whare"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 1,
-            "question": true
+            "question": true,
+            "resps": []
         },
         {
             "tag": "call_me",
@@ -96,11 +88,10 @@
                 "my name is",
                 "name me"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 1,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "set_alarm",
@@ -109,11 +100,10 @@
                 "create a alarm",
                 "alarm"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 1,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "tell_time",
@@ -122,12 +112,10 @@
                 "what's the time",
                 "tell time"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 7,
-            "question": false
-
+            "question": false,
+            "resps": []
         },
         {
             "tag": "defi",
@@ -139,27 +127,10 @@
                 "definition of the word",
                 "the defenition of the word"
             ],
-            "resp": [
-                ""
-            ],
+            "resp": [],
             "priority": 9,
-            "question": true
-        },
-        {
-            "tag": "calculations",
-            "patterns": [
-                "times",
-                "more",
-                "the power off",
-                "multiply",
-                "divided by"
-            ],
-            "resp": [
-                ""
-            ],
-            "priority": 8,
-            "question": true
-
+            "question": true,
+            "resps": []
         },
         {
             "tag": "delete",
@@ -169,11 +140,11 @@
                 "kill the",
                 "eradicate the",
                 "scratch out the"
-            ],"resp": [
-                ""
             ],
+            "resp": [],
             "priority": 3,
-            "question": false
+            "question": false,
+            "resps": []
         },
         {
             "tag": "get_number",
@@ -182,14 +153,33 @@
                 "What is the number of",
                 "What's the number of",
                 "What is the phone number of"
-
-            ],"resp": [
-                ""
             ],
+            "resp": [],
             "priority": 9,
-            "question": true
+            "question": true,
+            "resps": []
+        },
+        {
+            "tag": "notes",
+            "patterns": [
+                "note",
+                "notacion"
+            ],
+            "resp": [],
+            "priority": 0,
+            "question": true,
+            "resps": []
+        },
+        {
+            "tag": "contacts",
+            "patterns": [
+                "the contact of",
+                "contact of"
+            ],
+            "resp": [],
+            "priority": 0,
+            "question": true,
+            "resps": []
         }
-
     ]
-
 }

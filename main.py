@@ -267,17 +267,17 @@ def hear():
         audio=r.listen(source)
 
         try:
-            heard=r.recognize_sphinx(audio,language='en-US')
+            heard=r.recognize_google(audio,language='en-US')
             print(f"user said:{heard}\n")
             heard = heard.lower()
+            return  heard
         except sr.UnknownValueError:
             #athena_speak("say that again please!")
             return "None"
-        except sr.RequestError as e:
-            print("Sphinx error; {0}".format(e))
+        
 
 
-        return  heard
+        
         # print("thinking..")
         # athena_speak("thinking..")
         
