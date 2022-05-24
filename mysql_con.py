@@ -8,9 +8,8 @@ con = mysql.connector.connect(
 )
 
 CONN = con.cursor()
-q = "SELECT id FROM users WHERE name = 'user1'"
-CONN.execute(q)
-r = CONN.fetchall()
 
-ID_USER = r[0][0]
+
+
+ID_USER = 1
 

@@ -11,10 +11,15 @@
                 "see you later",
                 "go away"
             ],
-            "resp": [],
-            "priority": 4,
-            "question": false,
-            "resps": []
+            "resp": [
+                "I will go back to Olympus",
+                "bye",
+                "goodbye",
+                "see you later"
+            ],
+            "priority": "0",
+            "question": false
+         
         },
         {
             "tag": "greet",
@@ -25,10 +30,12 @@
                 "good evening",
                 "good afternoon"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 4,
-            "question": false,
-            "resps": []
+            "question": false
+          
         },
         {
             "tag": "new_note",
@@ -38,10 +45,12 @@
                 "add a note",
                 "write me"
             ],
-            "resp": [],
+            "resp": [
+                "What's your note?"
+            ],
             "priority": 9,
-            "question": false,
-            "resps": []
+            "question": false
+           
         },
         {
             "tag": "new_cont",
@@ -50,10 +59,12 @@
                 "new contact",
                 "add a new contact"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 8,
-            "question": false,
-            "resps": []
+            "question": false
+            
         },
         {
             "tag": "read_note",
@@ -61,10 +72,12 @@
                 "read note",
                 "read a note"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 1,
-            "question": false,
-            "resps": []
+            "question": false
+           
         },
         {
             "tag": "questions",
@@ -76,10 +89,12 @@
                 "what are",
                 "who whare"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 1,
-            "question": true,
-            "resps": []
+            "question": true
+           
         },
         {
             "tag": "call_me",
@@ -88,10 +103,12 @@
                 "my name is",
                 "name me"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 1,
-            "question": false,
-            "resps": []
+            "question": false
+          
         },
         {
             "tag": "set_alarm",
@@ -100,10 +117,12 @@
                 "create a alarm",
                 "alarm"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 1,
-            "question": false,
-            "resps": []
+            "question": false
+         
         },
         {
             "tag": "tell_time",
@@ -112,10 +131,12 @@
                 "what's the time",
                 "tell time"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 7,
-            "question": false,
-            "resps": []
+            "question": false
+         
         },
         {
             "tag": "defi",
@@ -127,24 +148,12 @@
                 "definition of the word",
                 "the defenition of the word"
             ],
-            "resp": [],
-            "priority": 9,
-            "question": true,
-            "resps": []
-        },
-        {
-            "tag": "delete",
-            "patterns": [
-                "delete the",
-                "remove the",
-                "kill the",
-                "eradicate the",
-                "scratch out the"
+            "resp": [
+                ""
             ],
-            "resp": [],
-            "priority": 3,
-            "question": false,
-            "resps": []
+            "priority": 9,
+            "question": true
+          
         },
         {
             "tag": "get_number",
@@ -154,21 +163,12 @@
                 "What's the number of",
                 "What is the phone number of"
             ],
-            "resp": [],
-            "priority": 9,
-            "question": true,
-            "resps": []
-        },
-        {
-            "tag": "notes",
-            "patterns": [
-                "note",
-                "notacion"
+            "resp": [
+                ""
             ],
-            "resp": [],
-            "priority": 0,
-            "question": true,
-            "resps": []
+            "priority": 9,
+            "question": true
+          
         },
         {
             "tag": "contacts",
@@ -176,10 +176,11 @@
                 "the contact of",
                 "contact of"
             ],
-            "resp": [],
+            "resp": [
+                ""
+            ],
             "priority": 0,
-            "question": true,
-            "resps": []
+            "question": true
         }
     ]
 }
