@@ -19,7 +19,6 @@
             ],
             "priority": "0",
             "question": false
-         
         },
         {
             "tag": "greet",
@@ -35,7 +34,6 @@
             ],
             "priority": 4,
             "question": false
-          
         },
         {
             "tag": "new_note",
@@ -50,7 +48,6 @@
             ],
             "priority": 9,
             "question": false
-           
         },
         {
             "tag": "new_cont",
@@ -64,7 +61,6 @@
             ],
             "priority": 8,
             "question": false
-            
         },
         {
             "tag": "read_note",
@@ -77,7 +73,6 @@
             ],
             "priority": 1,
             "question": false
-           
         },
         {
             "tag": "questions",
@@ -94,7 +89,6 @@
             ],
             "priority": 1,
             "question": true
-           
         },
         {
             "tag": "call_me",
@@ -108,7 +102,6 @@
             ],
             "priority": 1,
             "question": false
-          
         },
         {
             "tag": "set_alarm",
@@ -122,7 +115,6 @@
             ],
             "priority": 1,
             "question": false
-         
         },
         {
             "tag": "tell_time",
@@ -136,7 +128,6 @@
             ],
             "priority": 7,
             "question": false
-         
         },
         {
             "tag": "defi",
@@ -153,7 +144,6 @@
             ],
             "priority": 9,
             "question": true
-          
         },
         {
             "tag": "get_number",
@@ -168,7 +158,6 @@
             ],
             "priority": 9,
             "question": true
-          
         },
         {
             "tag": "contacts",
@@ -179,7 +168,7 @@
             "resp": [
                 ""
             ],
-            "priority": 0,
+            "priority": 11,
             "question": true
         }
     ]

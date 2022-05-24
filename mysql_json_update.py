@@ -26,7 +26,7 @@ def act():
     for i in data:
         d = {
             "name":i[0],
-            "data":i[1]
+            "number":i[1]
         }
         contacts_dict["contacts"] = contacts_dict["contacts"] + [d]
 
@@ -69,7 +69,7 @@ def act():
         o+=1
 
 
-    print(real_intents_json)
+   
     intents_json["intents"] = real_intents_json
 
     #resp array

@@ -2,15 +2,15 @@
     "contacts": [
         {
             "name": "miguel",
-            "data": "960462802"
+            "number": "960462802"
         },
         {
             "name": "mom",
-            "data": "912482741"
+            "number": "912482741"
         },
         {
             "name": "pedro",
-            "data": "912341647"
+            "number": "912341647"
         }
     ]
 }

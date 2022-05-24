@@ -4,9 +4,9 @@ import subprocess
 import pyttsx3
 import json
 import speech_recognition as sr
-
+import mysql_json_update
 import wikipedia
-
+import threading
 import os
 import datetime
 
@@ -180,7 +180,7 @@ def recognition(spoken,data,intent_specify=["all"]):
                 intent["position"] = position_intent
                 intent["priority"] = priority
             elif min_error_intent == intent["erro_min"]:
-                if priority > intent["priority"]:
+                if int(priority) > int(intent["priority"]):
                     intent["erro_min"] = min_error_intent
                     intent["resp"] = x["resp"]
                     intent["tag"] = x["tag"]
@@ -258,31 +258,30 @@ def athena_speak(speech):
 
 def hear():
     
-    r=sr.Recognizer()
+    # r=sr.Recognizer()
 
-    print(sr.Microphone())
-    with sr.Microphone() as source:
-        print("Listening...")
-        r.adjust_for_ambient_noise(source, duration=4)
-        audio=r.listen(source)
+    # print(sr.Microphone())
+    # with sr.Microphone() as source:
+    #     print("Listening...")
+    #     r.adjust_for_ambient_noise(source, duration=4)
+    #     audio=r.listen(source)
 
-        try:
-            heard=r.recognize_google(audio,language='en-US')
-            print(f"user said:{heard}\n")
-            heard = heard.lower()
-            return  heard
-        except sr.UnknownValueError:
-            #athena_speak("say that again please!")
-            return "None"
+    #     try:
+    #         heard=r.recognize_google(audio,language='en-US')
+    #         print(f"user said:{heard}\n")
+    #         heard = heard.lower()
+    #         return  heard
+    #     except sr.UnknownValueError:
+    #         #athena_speak("say that again please!")
+    #         return "None"
         
 
 
         
-        # print("thinking..")
-        # athena_speak("thinking..")
-        
-        # heard=input("Listenning...\n")
-        # return heard
+    print("thinking..")
+    
+    heard=input("Listenning...\n")
+    return heard
 
 def ordinal( n ):
 
@@ -304,8 +303,10 @@ def ordinal( n ):
 
 if __name__ == '__main__' :
 
+        #update database todos os 5 segundos
+        t = threading.Timer(5.0,lambda: mysql_json_update.act())
+        t.start()
 
-        
         while True:
 
             heard = hear()
@@ -439,7 +440,7 @@ if __name__ == '__main__' :
                     num = num_t
 
                     contact = {
-                        "name": name,
+                        "name": name.lower(),
                         "number": num
                         }
                     with open('json\contacts.json', 'r') as data:
@@ -477,11 +478,13 @@ if __name__ == '__main__' :
                         if k > position:
                             
                             question = question + ' ' + word
+                    
 
 
 
                     
                     question = repr(str(question))
+                    question  = question.replace(" the ","")
                     print(question)
                     try:
                         wiki_sum = wikipedia.summary(question)
@@ -745,24 +748,24 @@ if __name__ == '__main__' :
                     
                     athena_speak(resp)
 
-                elif tag == "delete":
-                    #ver o que e que e para dar delete
-                    with open("json/delete_temes.json", "r") as json_data:
-                        delete_data = json.load(json_data)
-                    delete_intent = recognition(heard,delete_data,["number","contacts","notes"])
-                    t = ["one","two","three","four","five","six","seven","eight","nine","ten"]
-                    heard_split = heard.split(" ")
-                    heard_split_place = 0
-                    for n in heard_split[:]:
+                
+                elif tag == "contacts":
 
-                        if n in t:
-                            l = 0
-                            for k in t:
-                                if n == k:
-                                    heard_split[heard_split_place] = k
-                        heard_split_place += 1
+                    heard = heard.split()
+                    name = (heard[position]).lower()
+                    with open("json/contacts.json","r",encoding="utf-8") as con_f:
+                        con = json.load(con_f)
                     
+                    con = con["contacts"]
+                    for i in con:
+                        if i["name"] == name:
+                            number = i["number"]
+                            athena_speak(f"the number of {name} is {number}")
+                           
 
+
+
+                    
                     #json delete_temes.json
                     #if 70% de erro
                     
