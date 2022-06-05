@@ -1,4 +1,4 @@
-from tkinter import NO
+
 import numpy as np
 import subprocess
 import pyttsx3
@@ -11,7 +11,7 @@ import os
 import datetime
 import mysql_con
 import time
-
+import clock
 
 
 engine = pyttsx3.init('sapi5')
@@ -368,6 +368,7 @@ def alarm_db(alarm):
 if __name__ == '__main__' :
 
         #update database todos os 5 segundos
+        threading.Thread(target = clock.desp).start()
         t = threading.Thread(target = act_now)
         t.start()
 
