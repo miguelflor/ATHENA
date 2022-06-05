@@ -268,30 +268,30 @@ def act_now():
 
 def hear():
     
-    # r=sr.Recognizer()
+    r=sr.Recognizer()
 
-    # print(sr.Microphone())
-    # with sr.Microphone() as source:
-    #     print("Listening...")
-    #     r.adjust_for_ambient_noise(source, duration=4)
-    #     audio=r.listen(source)
+    print(sr.Microphone())
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.adjust_for_ambient_noise(source, duration=4)
+        audio=r.listen(source)
 
-    #     try:
-    #         heard=r.recognize_google(audio,language='en-US')
-    #         print(f"user said:{heard}\n")
-    #         heard = heard.lower()
-    #         return  heard
-    #     except sr.UnknownValueError:
-    #         #athena_speak("say that again please!")
-    #         return "None"
+        try:
+            heard=r.recognize_google(audio,language='en-US')
+            print(f"user said:{heard}\n")
+            heard = heard.lower()
+            return  heard
+        except sr.UnknownValueError:
+            #athena_speak("say that again please!")
+            return "None"
         
 
 
         
-    print("thinking..")
+    # print("thinking..")
     
-    heard=input("Listenning...\n")
-    return heard
+    # heard=input("Listenning...\n")
+    # return heard
 
 def ordinal( n ):
 
@@ -310,12 +310,12 @@ def ordinal( n ):
     return str(n) + s
 
 def notes_db(note):
-    with open('json\otes.json', 'r') as data:
+    with open('json/otes.json', 'r') as data:
         x = json.load(data)
 
     x["notes"] = x["notes"] + [note]
     
-    with open("json\otes.json", "w") as data:
+    with open("json/otes.json", "w") as data:
         json.dump(x, data, indent=4)
 
     q = f"INSERT INTO Notes (notas,id_user) values ('{note}',{mysql_con.ID_USER});"
@@ -323,12 +323,12 @@ def notes_db(note):
     mysql_con.con.commit()
 
 def cont_db(contact):
-    with open('json\contacts.json', 'r') as data:
+    with open('json/contacts.json', 'r') as data:
         x = json.load(data)
         
     x["contacts"].append(contact)
     
-    with open('json\contacts.json','w') as data:
+    with open('json/contacts.json','w') as data:
         json.dump(x,data,indent=4)
     name = contact["name"]
     number = contact["number"]
@@ -337,12 +337,12 @@ def cont_db(contact):
     mysql_con.con.commit()
 
 def me_cont_db(new_name_user):
-    with open('json\contacts.json', 'r') as data:
+    with open('json/contacts.json', 'r') as data:
         dict = json.load(data)
 
     dict["contacts"][0]["name"] = new_name_user
 
-    with open('json\contacts.json', 'w') as data:
+    with open('json/contacts.json', 'w') as data:
         json.dump(dict, data, indent=4)
     
     q = f"UPDATE Contacts SET name = '{new_name_user}' WHERE id IN (SELECT * FROM (SELECT min(id) FROM Contacts WHERE id_user = {mysql_con.ID_USER}) TMPTBL)"
@@ -350,12 +350,12 @@ def me_cont_db(new_name_user):
     mysql_con.con.commit()
 
 def alarm_db(alarm):
-    with open("json\larms.json","r") as data:
+    with open("json/larms.json","r") as data:
         json_dict = json.load(data)
 
     json_dict["alarms"].append(alarm_dict)
 
-    with open("json\larms.json","w") as data:
+    with open("json/larms.json","w") as data:
         json.dump(json_dict,data, indent=4)
     
     time = alarm["h"]+":"+alarm["m"]
@@ -383,7 +383,7 @@ if __name__ == '__main__' :
             if "athena" in heard and len(heard)>1:
 
                 if len(heard) != 1:     
-                    with open("json\intents.json", "r") as json_file:
+                    with open("json/intents.json", "r") as json_file:
                           data_intents = json.load(json_file)   
                     intent = recognition(heard,data_intents)
                     position = intent["position"] #não absoluta ou seja em [a,b,c,d] a posição de c é 3
@@ -429,7 +429,7 @@ if __name__ == '__main__' :
 
                 elif tag == "read_note":
 
-                    with open('json\otes.json' , 'r') as data:
+                    with open('json/otes.json' , 'r') as data:
                         x = json.load(data)
                     n_notes = 0
                     
@@ -765,7 +765,7 @@ if __name__ == '__main__' :
                     
                     word = " ".join(copy)
                     word.replace(" ","",1)
-                    with open("json\dictionary1.json", "r", encoding="utf8")  as data:
+                    with open("json/dictionary1.json", "r", encoding="utf8")  as data:
                         dictionary = json.load(data)
                     
                     if word in dictionary:
