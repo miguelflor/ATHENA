@@ -9,6 +9,10 @@ import wikipedia
 import threading
 import os
 import datetime
+import mysql_con
+import time
+
+
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -256,6 +260,12 @@ def athena_speak(speech):
     engine.say(speech)
     engine.runAndWait()
 
+def act_now():
+    while True:
+        time.sleep(4)    
+        mysql_json_update.act()
+   
+
 def hear():
     
     # r=sr.Recognizer()
@@ -299,12 +309,66 @@ def ordinal( n ):
 
     return str(n) + s
 
+def notes_db(note):
+    with open('json\otes.json', 'r') as data:
+        x = json.load(data)
 
+    x["notes"] = x["notes"] + [note]
+    
+    with open("json\otes.json", "w") as data:
+        json.dump(x, data, indent=4)
+
+    q = f"INSERT INTO Notes (notas,id_user) values ('{note}',{mysql_con.ID_USER});"
+    mysql_con.CONN.execute(q)   
+    mysql_con.con.commit()
+
+def cont_db(contact):
+    with open('json\contacts.json', 'r') as data:
+        x = json.load(data)
+        
+    x["contacts"].append(contact)
+    
+    with open('json\contacts.json','w') as data:
+        json.dump(x,data,indent=4)
+    name = contact["name"]
+    number = contact["number"]
+    q = f"INSERT INTO Contacts (id_user,name,number) VALUES ({mysql_con.ID_USER},'{name}','{number}')"
+    mysql_con.CONN.execute(q)
+    mysql_con.con.commit()
+
+def me_cont_db(new_name_user):
+    with open('json\contacts.json', 'r') as data:
+        dict = json.load(data)
+
+    dict["contacts"][0]["name"] = new_name_user
+
+    with open('json\contacts.json', 'w') as data:
+        json.dump(dict, data, indent=4)
+    
+    q = f"UPDATE Contacts SET name = '{new_name_user}' WHERE id IN (SELECT * FROM (SELECT min(id) FROM Contacts WHERE id_user = {mysql_con.ID_USER}) TMPTBL)"
+    mysql_con.CONN.execute(q)
+    mysql_con.con.commit()
+
+def alarm_db(alarm):
+    with open("json\larms.json","r") as data:
+        json_dict = json.load(data)
+
+    json_dict["alarms"].append(alarm_dict)
+
+    with open("json\larms.json","w") as data:
+        json.dump(json_dict,data, indent=4)
+    
+    time = alarm["h"]+":"+alarm["m"]
+
+
+    q = f"INSERT INTO Alarms (id_user,alarme) VALUES ({mysql_con.ID_USER},'{time}')"
+    mysql_con.CONN.execute(q)
+    mysql_con.con.commit()
 
 if __name__ == '__main__' :
 
         #update database todos os 5 segundos
-        t = threading.Timer(5.0,lambda: mysql_json_update.act())
+        t = threading.Thread(target = act_now)
         t.start()
 
         while True:
@@ -358,13 +422,9 @@ if __name__ == '__main__' :
                         else:
                             note = heard
                             break
-                    with open('json\otes.json', 'r') as data:
-                        x = json.load(data)
-
-                    x["notes"] = x["notes"] + [note]
-
-                    with open("json\otes.json", "w") as data:
-                        json.dump(x, data, indent=4)
+                    threading.Thread(target=notes_db, args=(note,)).start()                    
+                    
+                    
 
                 elif tag == "read_note":
 
@@ -377,9 +437,10 @@ if __name__ == '__main__' :
                         athena_speak("note number "+str(n_notes)+" : "+ notes)
 
                 elif tag == "new_cont":
-                    athena_speak("what is the name of your contact ?")
+                    
                     
                     while True:
+                        athena_speak("what is the name of your contact ?")
                         while True:
                             heard = hear()
                             if heard == 0:
@@ -443,15 +504,9 @@ if __name__ == '__main__' :
                         "name": name.lower(),
                         "number": num
                         }
-                    with open('json\contacts.json', 'r') as data:
-                        x = json.load(data)
-                        
-                    x["contacts"].append(contact)
                     
-                    with open('json\contacts.json','w') as data:
-                        json.dump(x,data,indent=4)
-
-
+                    
+                    threading.Thread(target=cont_db, args=(contact,)).start()
 
                     athena_speak("your contact has been created ")
 
@@ -552,13 +607,8 @@ if __name__ == '__main__' :
                     if new_name_user != None:
                         print("ok, "+new_name_user)
                         athena_speak("ok, "+new_name_user)
-                        with open('json\contacts.json', 'r') as data:
-                            dict = json.load(data)
-
-                        dict["contacts"][0]["name"] = new_name_user
-
-                        with open('json\contacts.json', 'w') as data:
-                            json.dump(dict, data, indent=4)
+                        threading.Thread(target=me_cont_db, args=(new_name_user,)).start()
+                     
                     else:
                         athena_speak(response(["I didn't understand how i should call you","I didn't understant how i what should I call you"]))
                     new_name_user = None
@@ -618,13 +668,7 @@ if __name__ == '__main__' :
                             "m": m
 
                         }
-                        with open("json\larms.json","r") as data:
-                            json_dict = json.load(data)
-
-                        json_dict["alarms"].append(alarm_dict)
-
-                        with open("json\larms.json","w") as data:
-                            json.dump(json_dict,data, indent=4)
+                        threading.Thread(target=alarm_db, args=(alarm_dict,)).start()
 
                         athena_speak("alarm set for "+str(h)+" hours and "+str(m)+" minutes")
 
@@ -698,13 +742,8 @@ if __name__ == '__main__' :
                                     "m": m
 
                                 }
-                                with open("json\larms.json", "r") as data:
-                                    json_dict = json.load(data)
+                                threading.Thread(target=alarm_db, args=(alarm_dict,)).start()
 
-                                json_dict["alarms"].append(alarm_dict)
-
-                                with open("json\larms.json", "w") as data:
-                                    json.dump(json_dict, data, indent=4)
 
                                 athena_speak("alarm set for " + str(h) + " hours and " + str(m) + " minutes")
                                 break

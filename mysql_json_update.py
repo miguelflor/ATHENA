@@ -5,11 +5,44 @@ import json
 id_user = mysql_con.ID_USER
 
 def act():
+    #notes
+    q = "SELECT * FROM Notes WHERE id_user = %s" % (str(id_user))
+    mysql_con.CONN.execute(q)
+    data = mysql_con.CONN.fetchall()
+    notes = {
+        "notes":[
+            
+        ]
+    }
+    for i in data:
+        
+        data_new = i[2].split(":")
+        
+        notes["notes"] = notes["notes"] + [data_new]
+
+    with open("json/otes.json","w") as notess:
+        json.dump(notes,notess,indent=4)
+
     #alamrs
     q = "SELECT * FROM Alarms WHERE id_user = %s" % (str(id_user))
     mysql_con.CONN.execute(q)
     data = mysql_con.CONN.fetchall()
+    alarms = {
+        "alarms":[
+            
+        ]
+    }
+    for i in data:
+        
+        data_new = i[2].split(":")
+        d = {
+            "h":data_new[0],
+            "m":data_new[1]
+        }
+        alarms["alarms"] = alarms["alarms"] + [d]
 
+    with open("json/larms.json","w") as alarmss:
+        json.dump(alarms,alarmss,indent=4)
 
     #contacts
     contacts_dict = {
