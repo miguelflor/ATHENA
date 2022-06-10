@@ -16,8 +16,7 @@ def act():
     }
     for i in data:
         
-        data_new = i[2].split(":")
-        
+        data_new= i[2]
         notes["notes"] = notes["notes"] + [data_new]
 
     with open("json/otes.json","w") as notess:
@@ -70,7 +69,7 @@ def act():
 
 
 
-    with open("json/intents.json","r") as intents_json:
+    with open("json\intents.json","r",encoding="utf-8") as intents_json:
         intents_json = json.load(intents_json)
     real_intents_json = intents_json["intents"]
 

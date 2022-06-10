@@ -268,30 +268,30 @@ def act_now():
 
 def hear():
     
-    r=sr.Recognizer()
+    # r=sr.Recognizer()
 
-    print(sr.Microphone())
-    with sr.Microphone() as source:
-        print("Listening...")
-        r.adjust_for_ambient_noise(source, duration=4)
-        audio=r.listen(source)
+    # print(sr.Microphone())
+    # with sr.Microphone() as source:
+    #     print("Listening...")
+    #     #r.adjust_for_ambient_noise(source, duration=4)
+    #     audio=r.listen(source)
 
-        try:
-            heard=r.recognize_google(audio,language='en-US')
-            print(f"user said:{heard}\n")
-            heard = heard.lower()
-            return  heard
-        except sr.UnknownValueError:
-            #athena_speak("say that again please!")
-            return "None"
+    #     try:
+    #         heard=r.recognize_google(audio,language='en-US')
+    #         print(f"user said:{heard}\n")
+    #         heard = heard.lower()
+    #         return  heard
+    #     except sr.UnknownValueError:
+    #         #athena_speak("say that again please!")
+    #         return "None"
         
 
 
         
-    # print("thinking..")
+    print("thinking..")
     
-    # heard=input("Listenning...\n")
-    # return heard
+    heard=input("Listenning...\n")
+    return heard
 
 def ordinal( n ):
 
@@ -368,7 +368,7 @@ def alarm_db(alarm):
 if __name__ == '__main__' :
 
         #update database todos os 5 segundos
-        threading.Thread(target = clock.desp).start()
+        #threading.Thread(target = clock.desp).start()
         t = threading.Thread(target = act_now)
         t.start()
 
