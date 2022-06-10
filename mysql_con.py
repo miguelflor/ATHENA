@@ -1,4 +1,5 @@
 import mysql.connector
+error = 0
 try:
     con = mysql.connector.connect(
         host="athenaconfiguration.hopto.org",
@@ -13,5 +14,6 @@ try:
 
     ID_USER = 1
 except:
+    error=1
     print("you are offline")
 
