@@ -13,6 +13,10 @@ try:
     print(con)
 
     ID_USER = 1
+    q = f"SELECT real_name FROM users WHERE id = {ID_USER}"
+    CONN.execute(q)
+    NAME  = CONN.fetchall()[0][0]
+
 except:
     error=1
     print("you are offline")

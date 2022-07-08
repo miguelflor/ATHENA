@@ -1,38 +1,10 @@
 import mysql_json_update
 import threading
 import time
+import mysql_con
 
-class act_tasks:
-      
-    def __init__(self):
-        self._running = True
-      
-    def terminate(self):
-        self._running = False
-        
-    def run(self):
-        while True:
-            #mysql_json_update.act()
-            if self._running == True:
-                print("act")
-            time.sleep(1)
-           
-                
-    def positive(self):
-        self._running = True
-  
-
-
-c = act_tasks()
-t = threading.Thread(target=c.run)
-t.start()
-
-
-while True:
-    input_T = input("parar s começar v")
-    if input_T == "s":
-        c.terminate()
-        #t.join() 
-    elif input_T == "v":
-        c.positive()
-  
+q = f"SELECT real_name FROM users WHERE id = {mysql_con.ID_USER}"
+mysql_con.CONN.execute(q)
+NAME  = mysql_con.CONN.fetchall()[0][0]
+print(NAME)
+    

@@ -338,17 +338,12 @@ def cont_db(contact):
     mysql_con.con.commit()
 
 def me_cont_db(new_name_user):
-    with open('json/contacts.json', 'r') as data:
-        dict = json.load(data)
-
-    dict["contacts"][0]["name"] = new_name_user
-
-    with open('json/contacts.json', 'w') as data:
-        json.dump(dict, data, indent=4)
     
-    q = f"UPDATE Contacts SET name = '{new_name_user}' WHERE id IN (SELECT * FROM (SELECT min(id) FROM Contacts WHERE id_user = {mysql_con.ID_USER}) TMPTBL)"
+    q = f"UPDATE Users SET real_name = '{new_name_user}' WHERE id = {mysql_con.ID_USER}"
     mysql_con.CONN.execute(q)
     mysql_con.con.commit()
+    mysql_con.NAME = new_name_user
+
 
 def alarm_db(alarm):
     with open("json/larms.json","r") as data:
@@ -424,14 +419,14 @@ if __name__ == '__main__' :
 
                     h = datetime.datetime.now().hour
                     if h < 12:
-                        athena_speak("Good morning!")
+                        athena_speak(f"Good morning {mysql_con.NAME}!")
 
                     elif h > 12 and h < 18:
-                        athena_speak("Good Afternoon!")
+                        athena_speak(f"Good Afternoon {mysql_con.NAME}!")
 
                     else:
 
-                        athena_speak("Good evening!")
+                        athena_speak(f"Good evening {mysql_con.NAME}!")
 
                 elif tag == "new_note":
                     c.terminate()
@@ -601,7 +596,7 @@ if __name__ == '__main__' :
                         print(wiki_true)
                         athena_speak(wiki_true)
                     except:
-                        athena_speak("sorry, i don't know")
+                        athena_speak(f"sorry {mysql_con.NAME}, i don't know")
 
                 elif tag == "call_me":
                     c.terminate()
@@ -738,7 +733,7 @@ if __name__ == '__main__' :
                             i+=1
 
                             if i !=1:
-                                athena_speak("can you repeat please")
+                                athena_speak(f"{mysql_con.NAME}, can you repeat please")
                             while True:
                                 heard = hear()
                                 if heard == 0:
@@ -842,7 +837,7 @@ if __name__ == '__main__' :
                                 #estive aqui provavelmente funciona mas vou dormir não testado  
                     else: 
                             
-                        resp = response(["I don't know the deffenition of that word","I don't know the meaning of that word","I don't know","that word is not in my dictionary"])
+                        resp = response([f" {mysql_con.NAME}, I don't know the deffenition of that word",f" {mysql_con.NAME},I don't know the meaning of that word",f" {mysql_con.NAME},I don't know",f"{mysql_con.NAME}, that word is not in my dictionary"])
                     
                     athena_speak(resp)
 
