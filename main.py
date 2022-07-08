@@ -260,11 +260,6 @@ def athena_speak(speech):
     engine.say(speech)
     engine.runAndWait()
 
-def act_now():
-    while True:
-        time.sleep(4)    
-        mysql_json_update.act()
-   
 
 def hear():
     
@@ -310,6 +305,7 @@ def ordinal( n ):
     return str(n) + s
 
 def notes_db(note):
+    
     with open('json/otes.json', 'r') as data:
         x = json.load(data)
 
@@ -321,6 +317,11 @@ def notes_db(note):
     q = f"INSERT INTO Notes (notas,id_user) values ('{note}',{mysql_con.ID_USER});"
     mysql_con.CONN.execute(q)   
     mysql_con.con.commit()
+    
+     
+
+        #o mesmo para o resto
+            
 
 def cont_db(contact):
     with open('json/contacts.json', 'r') as data:
@@ -365,11 +366,28 @@ def alarm_db(alarm):
     mysql_con.CONN.execute(q)
     mysql_con.con.commit()
 
+class act_tasks:
+      
+    def __init__(self):
+        self._running = True
+      
+    def terminate(self):
+        self._running = False
+        
+    def run(self):
+        while True:
+            if self._running:
+                mysql_json_update.act()
+            time.sleep(4)
+
+    def positive(self):
+        self._running = True
+  
 if __name__ == '__main__' :
 
         #update database todos os 5 segundos
-        #threading.Thread(target = clock.desp).start()
-        t = threading.Thread(target = act_now)
+        c = act_tasks()
+        t = threading.Thread(target = c.run)
         t.start()
 
         while True:
@@ -381,7 +399,7 @@ if __name__ == '__main__' :
 
 
             if "athena" in heard and len(heard)>1:
-
+                c.terminate()
                 if len(heard) != 1:     
                     with open("json/intents.json", "r") as json_file:
                           data_intents = json.load(json_file)   
@@ -394,7 +412,9 @@ if __name__ == '__main__' :
                         tag = "none"
                 else:
                     tag = "none"
-                
+                c.positive()
+            
+
                 print(tag)
                 if tag == "goodbyes":
                     athena_speak(response(resp))
@@ -414,6 +434,7 @@ if __name__ == '__main__' :
                         athena_speak("Good evening!")
 
                 elif tag == "new_note":
+                    c.terminate()
                     athena_speak(response(resp))
 
                     while True:
@@ -423,7 +444,11 @@ if __name__ == '__main__' :
                         else:
                             note = heard
                             break
-                    threading.Thread(target=notes_db, args=(note,)).start()                    
+                    #threading.Thread(target=notes_db, args=(note,)).start()    
+                    notes_db(note) 
+                    athena_speak("note created")
+                    c.positive()
+                          
                     
                     
 
@@ -438,7 +463,7 @@ if __name__ == '__main__' :
                         athena_speak("note number "+str(n_notes)+" : "+ notes)
 
                 elif tag == "new_cont":
-                    
+                    c.terminate()
                     
                     while True:
                         athena_speak("what is the name of your contact ?")
@@ -475,9 +500,28 @@ if __name__ == '__main__' :
                                 continue
                             else:
                                 num = heard
+                                num_justnum = ""
+                                numbers = ["1","2","3","4","5","6","7","8","9","0"]
+                                num_fake = False
+                                for i in list(num):
+                                    
+                                    try:
+                                        u = int(i)
+                                  
+
+                                    except:
+                                        num_fake = True
+                                    
+                                    if num_fake == False:
+                                        num_justnum = num_justnum + i
+                                    else:
+                                        num_fake = False
+                                
+                                num = num_justnum
+                        
                                 break
 
-                        athena_speak("is your contact number" + num + " ?")
+                        athena_speak("is your contact number " + num + " ?")
 
 
                         while True:
@@ -500,6 +544,7 @@ if __name__ == '__main__' :
                             num_t = num_t + n
 
                     num = num_t
+                    
 
                     contact = {
                         "name": name.lower(),
@@ -507,9 +552,11 @@ if __name__ == '__main__' :
                         }
                     
                     
-                    threading.Thread(target=cont_db, args=(contact,)).start()
-
+                    #threading.Thread(target=cont_db, args=(contact,)).start()
+                    cont_db(contact)
                     athena_speak("your contact has been created ")
+                    c.positive()
+
 
                 elif tag == "tell_time":
                     now = datetime.datetime.now()
@@ -557,6 +604,7 @@ if __name__ == '__main__' :
                         athena_speak("sorry, i don't know")
 
                 elif tag == "call_me":
+                    c.terminate()
                     heard = heard.split()
 
                     i = 0
@@ -608,14 +656,18 @@ if __name__ == '__main__' :
                     if new_name_user != None:
                         print("ok, "+new_name_user)
                         athena_speak("ok, "+new_name_user)
-                        threading.Thread(target=me_cont_db, args=(new_name_user,)).start()
+                        #threading.Thread(target=me_cont_db, args=(new_name_user,)).start()
+                        me_cont_db(new_name_user)
                      
                     else:
                         athena_speak(response(["I didn't understand how i should call you","I didn't understant how i what should I call you"]))
                     new_name_user = None
-                    
+                    c.positive()
+                   
+
 
                 elif tag == "set_alarm":
+                    c.terminate()
                     choice = 0
                     array_nums = []
                     for num in heard.split():
@@ -669,7 +721,8 @@ if __name__ == '__main__' :
                             "m": m
 
                         }
-                        threading.Thread(target=alarm_db, args=(alarm_dict,)).start()
+                        #threading.Thread(target=alarm_db, args=(alarm_dict,)).start()
+                        alarm_db(alarm_dict)
 
                         athena_speak("alarm set for "+str(h)+" hours and "+str(m)+" minutes")
 
@@ -743,11 +796,16 @@ if __name__ == '__main__' :
                                     "m": m
 
                                 }
-                                threading.Thread(target=alarm_db, args=(alarm_dict,)).start()
+                                #threading.Thread(target=alarm_db, args=(alarm_dict,)).start()
+                                alarm_db(alarm_dict)
 
 
                                 athena_speak("alarm set for " + str(h) + " hours and " + str(m) + " minutes")
                                 break
+
+                            c.positive()
+
+
 
                 elif tag == "defi":
                     heardcopy = heard.split(" ")

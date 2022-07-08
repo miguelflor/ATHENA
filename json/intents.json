@@ -9,7 +9,8 @@
                 "bye bye",
                 "see you",
                 "see you later",
-                "go away"
+                "go away",
+                "Shut up"
             ],
             "resp": [
                 "I will go back to Olympus",
@@ -17,7 +18,7 @@
                 "goodbye",
                 "see you later"
             ],
-            "priority": "0",
+            "priority": 4,
             "question": false
         },
         {
@@ -27,7 +28,8 @@
                 "hi",
                 "good morning",
                 "good evening",
-                "good afternoon"
+                "good afternoon",
+                "Ola"
             ],
             "resp": [
                 ""
@@ -162,8 +164,9 @@
         {
             "tag": "contacts",
             "patterns": [
-                "the contact of",
-                "contact of"
+                "phone number of",
+                "the number of",
+                "number of"
             ],
             "resp": [
                 ""

@@ -2,7 +2,7 @@ import mysql.connector
 error = 0
 try:
     con = mysql.connector.connect(
-        host="athenaconfiguration.hopto.org",
+        host="athenaconf.hopto.org",
         user="remote",
         password="L5SUv27*#_",
         database="athena"
@@ -10,7 +10,7 @@ try:
 
     CONN = con.cursor()
 
-
+    print(con)
 
     ID_USER = 1
 except:

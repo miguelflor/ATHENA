@@ -1,21 +1,38 @@
-heard = input()
-w = ["one","two","three","four","five","six","seven","eight","nine","ten"]
-n = ["1","2","3","4","5","6","7","8","9","10"]
-heard_split = heard.split(" ")
+import mysql_json_update
+import threading
+import time
 
-heard_split_place = 0
-for n in heard_split[:]:
-    
-    if n in w:
-        l = 0
-        print(n)
-        for k in w:
-            if n == k:
-                print(heard_split[heard_split_place])
-                print(n[l])
-                heard_split[heard_split_place] = n[l]
+class act_tasks:
+      
+    def __init__(self):
+        self._running = True
+      
+    def terminate(self):
+        self._running = False
+        
+    def run(self):
+        while True:
+            #mysql_json_update.act()
+            if self._running == True:
+                print("act")
+            time.sleep(1)
+           
                 
-        l+=1
-    heard_split_place += 1
+    def positive(self):
+        self._running = True
+  
 
-print(" ".join(heard_split))
+
+c = act_tasks()
+t = threading.Thread(target=c.run)
+t.start()
+
+
+while True:
+    input_T = input("parar s começar v")
+    if input_T == "s":
+        c.terminate()
+        #t.join() 
+    elif input_T == "v":
+        c.positive()
+  

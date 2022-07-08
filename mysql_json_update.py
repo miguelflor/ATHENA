@@ -4,6 +4,10 @@ import json
 
 id_user = mysql_con.ID_USER
 
+
+
+
+
 def act():
         #notes
     if mysql_con.error==0:
@@ -27,6 +31,7 @@ def act():
         q = "SELECT * FROM Alarms WHERE id_user = %s" % (str(id_user))
         mysql_con.CONN.execute(q)
         data = mysql_con.CONN.fetchall()
+    
         alarms = {
             "alarms":[
                 
@@ -92,13 +97,31 @@ def act():
 
 
         o=0
-        for g in real_intents_json[:]:
-            tag = g["tag"]
 
-            for l in data[:]:
-                if l[0] == tag:
-                    real_intents_json[o]["patterns"] = real_intents_json[o]["patterns"] + [l[1]]
+        tot_patterns = []
+        act_intent = ""
+        
+        patterns = []
+        
+        for i in data:
+            if o == 0:
+                act_intent = i[0]
             
+            if act_intent == i[0]:
+                patterns = patterns + [i[1]]
+            else:
+                tot_patterns = tot_patterns + [patterns]
+                patterns = []
+                act_intent = i[0]
+                patterns = patterns + [i[1]]
+            
+            o+=1
+        
+  
+        o = 0
+        for i in real_intents_json[:]:
+            real_intents_json[o]["patterns"] = tot_patterns[o]
+
             o+=1
 
 
@@ -128,17 +151,19 @@ def act():
         mysql_con.CONN.execute(q)
         data = mysql_con.CONN.fetchall()
 
-        o = 0
-        for g in real_intents_json[:]:
-            tag = g["tag"]
+        # o = 0
+        # for g in real_intents_json[:]:
+        #     tag = g["tag"]
 
-            for l in data[:]:
-                if l[0] == tag:
-                    real_intents_json[o]["priority"] = l[1]
-                    real_intents_json[o]["priority"] = l[2]
+        #     for l in data[:]:
+        #         if l[0] == tag:
+        #             real_intents_json[o]["priority"] = l[1]
+        #             real_intents_json[o]["priority"] = l[2]
 
         intents_json["intents"] = real_intents_json
 
         with open("json/intents.json","w",encoding="utf-8") as i:
             json.dump(intents_json,i,indent=4)
+
+        mysql_con.con.commit()
 
