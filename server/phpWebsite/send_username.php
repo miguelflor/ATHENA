@@ -3,10 +3,13 @@ require "conn.php";
 session_start();
 
 $id = $_SESSION["id"];
-$username = sanitize_input($_POST["username"]);
+$username = $_POST["username"];
 
-$q = "UPDATE users SET `name` = '$username' WHERE id = $id;";
-$r = mysqli_query($conn, $q);
+$q = "UPDATE users SET `name` = ? WHERE id =?;";
+$stmt = $conn->prepare($q);
+$stmt->bind_param("si", $username, $id);
+$stmt->execute();
+$stmt->close();
 
 echo "success";
 ?>

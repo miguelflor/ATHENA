@@ -1,45 +1,42 @@
 <?php
-include("conn.php");
+include ("conn.php");
 session_start();
 $id = $_SESSION["id"];
-$q = "SELECT notas,id FROM Notes WHERE id_user = $id";
-$r = mysqli_query($conn, $q);
+$q = "SELECT notas, id FROM Notes WHERE id_user = ?";
+$stmt = $conn->prepare($q);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->store_result();
 
-
-$f = 0;
-if(mysqli_num_rows($r)>0){
-    $f=1;
+if ($stmt->num_rows > 0) {
+    $stmt->bind_result($note, $noteId);
     echo "
     <table class='table is-striped is-narrow is-hoverable is-fullwidth'>
     <thead>
         <tr>
         <th>Notes</th>
         <th></th>
-            
         </tr>
-        
     </thead>
     <tbody>
     ";
-    while($arr = mysqli_fetch_array($r)){
-        $a = $arr[0];
-        $id = $arr[1];
+    while ($stmt->fetch()) {
         echo "<tr>";
-        echo "<td>$a</td>";
-        echo "<td><button class='button is-medium is-danger is-rounded is-responsive' onclick='delete_note($id)' data-target='modal-time'>
+        echo "<td>$note</td>";
+        echo "<td><button class='button is-medium is-danger is-rounded is-responsive' onclick='delete_note($noteId)' data-target='modal-time'>
         <span class='icon'>
         <i class='fas fa-solid fa-trash'></i>
         </span>
     </button></td>";
         echo "</tr>";
     }
-   
     echo "
     </tbody>
 </table>
     ";
+} else {
+    echo "No notes found.";
 }
-
-
+$stmt->close();
 
 ?>

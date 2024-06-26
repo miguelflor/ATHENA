@@ -2,10 +2,13 @@
 include ("conn.php");
 session_start();
 $value = $_POST["value"];
-if (is_numeric($value)) {
-    $q = "DELETE FROM Notes WHERE id = $value";
-    $r = mysqli_query($conn, $q);
-}
+
+$q = "DELETE FROM Notes WHERE id = ?";
+$stmt = $conn->prepare($q);
+$stmt->bind_param("i", $value);
+$stmt->execute();
+$stmt->close();
+
 
 
 ?>

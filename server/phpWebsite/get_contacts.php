@@ -2,30 +2,28 @@
 require "conn.php";
 session_start();
 $id = $_SESSION["id"];
-$q = "SELECT id,name,number FROM Contacts WHERE id_user = $id";
-$r = mysqli_query($conn,$q);
+$q = "SELECT id, name, number FROM Contacts WHERE id_user = ?";
+$stmt = $conn->prepare($q);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->store_result();
 
-if(mysqli_num_rows($r)>0){
-    $f=1;
+if ($stmt->num_rows > 0) {
+    $stmt->bind_result($id, $name, $number);
     echo "
     <table class='table is-striped is-narrow is-hoverable is-fullwidth'>
     <thead>
         <tr>
         <th>Name</th>
-        <th>number</th>
+        <th>Number</th>
         <th></th>
-            
         </tr>
-        
     </thead>
     <tbody>
     ";
-    while($arr = mysqli_fetch_array($r)){
-        $a = $arr[1];
-        $id = $arr[0];
-        $number = $arr[2];
+    while ($stmt->fetch()) {
         echo "<tr>";
-        echo "<th>$a</th>";
+        echo "<th>$name</th>";
         echo "<th>$number</th>";
         echo "<th><button class='button is-medium is-danger is-rounded is-responsive' onclick='delete_contact($id)' data-target='modal-time'>
         <span class='icon'>
@@ -34,29 +32,22 @@ if(mysqli_num_rows($r)>0){
     </button></th>";
         echo "</tr>";
     }
-   
     echo "
     </tbody>
 </table>
     ";
-}else{
+} else {
     echo "
     <table class='table is-striped is-narrow is-hoverable is-fullwidth'>
     <thead>
         <tr>
         <th>Name</th>
-        <th>number</th>
-            
+        <th>Number</th>
         </tr>
-        
     </thead>
     <tbody>
-    
     </tbody>
 </table>
     ";
 }
-
-
-
 ?>

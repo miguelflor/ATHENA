@@ -1,14 +1,17 @@
 <?php
-include("conn.php");
+include ("conn.php");
 session_start();
 $id = $_SESSION["id"];
-$q = "SELECT alarme,id FROM Alarms WHERE id_user = $id";
-$r = mysqli_query($conn, $q);
-
+$q = "SELECT alarme,id FROM Alarms WHERE id_user = ?";
+$stmt = $conn->prepare($q);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$stmt->store_result();
 
 $f = 0;
-if(mysqli_num_rows($r)>0){
-    $f=1;
+if ($stmt->num_rows > 0) {
+    $stmt->bind_result($alarm, $id);
+    $f = 1;
     echo "
     <table class='table is-striped is-narrow is-hoverable is-fullwidth'>
     <thead>
@@ -21,11 +24,9 @@ if(mysqli_num_rows($r)>0){
     </thead>
     <tbody>
     ";
-    while($arr = mysqli_fetch_array($r)){
-        $a = $arr[0];
-        $id = $arr[1];
+    while ($stmt->fetch()) {
         echo "<tr>";
-        echo "<th>$a</th>";
+        echo "<th>$alarm</th>";
         echo "<th><button class='button is-medium is-danger is-rounded is-responsive' onclick='delete_alarm($id)' data-target='modal-time'>
         <span class='icon'>
         <i class='fas fa-solid fa-trash'></i>
@@ -33,12 +34,12 @@ if(mysqli_num_rows($r)>0){
     </button></th>";
         echo "</tr>";
     }
-   
+
     echo "
     </tbody>
 </table>
     ";
-}else{
+} else {
     echo "
     <table class='table is-striped is-narrow is-hoverable is-fullwidth'>
     <thead>
@@ -56,6 +57,6 @@ if(mysqli_num_rows($r)>0){
     ";
 }
 
-
+$stmt->close();
 
 ?>
